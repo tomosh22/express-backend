@@ -12,7 +12,6 @@ var config = {
 }
 function doGet(sql,res)
 {
-  console.log("hi");
   var con = mysql.createConnection(config);
   con.connect(function(err) {
     if (err) throw err;
@@ -27,6 +26,19 @@ function doGet(sql,res)
     });
   });
 }
+function doPost(sql,res)
+{
+  var con = mysql.createConnection(config);
+  con.connect(function(err) {
+    if (err) throw err;
+    // if connection is successful
+    con.query(sql,function (err, result, fields) {
+      // if any error while executing above query, throw error
+      if (err) throw err;
+      res.send(null)
+    });
+  });
+}
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -35,5 +47,19 @@ router.get('/', function(req, res, next) {
 router.get('/selectLoginUser/:username', function(req, res, next) {
   query = "SELECT Username,FirstName,SecondName,Email FROM User WHERE Username = "+"\'"+req.params.username+"\'";
   doGet(query,res);
+});
+
+router.post('/insertAddressQuery/:number/:street/:townorcity/:county/:postcode', function(req, res, next) {
+  p = req.params;
+  query = "INSERT INTO Address (Number,Street,TownOrCity,County,Postcode) " +
+      "VALUES("+
+      "\'"+p.number+"\',"+
+      "\'"+p.street+"\',"+
+      "\'"+p.townorcity+"\',"+
+      "\'"+p.county+"\',"+
+      "\'"+p.postcode+"\'"+
+      ");";
+  console.log(query);
+  doPost(query,res);
 });
 module.exports = router;
