@@ -49,14 +49,12 @@ router.get('/selectLoginUser/:username', function(req, res, next) {
   doGet(query,res);
 });
 
-router.post('/insertAddressQuery/:number/:street/:townorcity/:county/:postcode', function(req, res, next) {
+router.post('/insertAddressQuery/:line1/:line2/:postcode', function(req, res, next) {
   p = req.params;
-  query = "INSERT INTO Address (Number,Street,TownOrCity,County,Postcode) " +
+  query = "INSERT INTO Address (Line1,Line2,Postcode) " +
       "VALUES("+
-      "\'"+p.number+"\',"+
-      "\'"+p.street+"\',"+
-      "\'"+p.townorcity+"\',"+
-      "\'"+p.county+"\',"+
+      "\'"+p.line1+"\',"+
+      "\'"+p.line2+"\',"+
       "\'"+p.postcode+"\'"+
       ");";
   console.log(query);

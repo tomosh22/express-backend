@@ -13,4 +13,4 @@ in a browser
 
 To test a HTTP post execute this command in the command line:
 
-curl -X post http://localhost:3000/insertAddressQuery/1/sdfvb/sdv/dsfv/dsfv
+curl --data '' post http://localhost:3000/insertAddressQuery/line1test/line2/test/postcodetest
