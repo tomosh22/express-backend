@@ -102,9 +102,9 @@ router.get('/getUserAccounts/:username', function(req, res, next) {
   console.log(query);
   doGet(query,res);
 });
-router.get('/getUserBalance/:username/:accnumber', function(req, res, next) {
+router.get('/getUserBalance//:accnumber', function(req, res, next) {
   p = req.params;
-  query = "SELECT Balance FROM Account WHERE Username = " + "\'" + p.username + "\'" + " AND AccNumber = " + "\'" + p.accnumber + "\'";
+  query = "SELECT Balance FROM Account WHERE AccNumber = " + "\'" + p.accnumber + "\'";
   //query = "SELECT * FROM Address"
   console.log(query);
   doGet(query,res);
