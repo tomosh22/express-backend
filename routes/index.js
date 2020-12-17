@@ -18,11 +18,12 @@ function doGet(sql,res)
     // if connection is successful
     con.query(sql,function (err, result, fields) {
       // if any error while executing above query, throw error
-      if (err) throw err;
+      if (err){ res.status(500); throw (err)};
       // if there is no error, you have the result
       res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
-      res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+      res.setHeader('Access-Control-Allow-Methods', 'GET');
       res.send(result);
+      res.end();
     });
   });
 }
@@ -34,7 +35,10 @@ function doPost(sql,res)
     // if connection is successful
     con.query(sql,function (err, result, fields) {
       // if any error while executing above query, throw error
-      if (err) throw err;
+      if (err){ res.status(500); throw (err)};
+      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
+      res.setHeader('Access-Control-Allow-Methods', 'POST');
+      res.status(200)
       res.send(null)
     });
   });
@@ -49,13 +53,71 @@ router.get('/selectLoginUser/:username', function(req, res, next) {
   doGet(query,res);
 });
 
-router.post('/insertAddressQuery/:line1/:line2/:postcode', function(req, res, next) {
+router.post('/insertAddress/:line1/:line2/:postcode', function(req, res, next) {
   p = req.params;
   query = "INSERT INTO Address (Line1,Line2,Postcode) " +
       "VALUES("+
       "\'"+p.line1+"\',"+
       "\'"+p.line2+"\',"+
       "\'"+p.postcode+"\'"+
+      ");";
+  console.log(query);
+  doPost(query,res);
+});
+
+router.get('/selectAddress/:line1/:line2/:postcode', function(req, res, next) {
+  p = req.params;
+  query = "SELECT AddressId FROM Address WHERE Line1 = "+"\'"+ p.line1 + "\'"+" AND Line2 = " + "\'"+p.line2 + "\'"+" AND Postcode = " + "\'"+ p.postcode +"\'";
+  //query = "SELECT * FROM Address"
+  console.log(query);
+  doGet(query,res);
+});
+
+router.post('/insertUser/:username/:password/:salt/:firstname/:secondname/:email/:addressid', function(req, res, next) {
+  p = req.params;
+  query = "INSERT INTO User (Username,Password,Salt,Firstname,SecondName,Email,AddressId) " +
+      "VALUES("+
+      "\'"+p.username+"\',"+
+      "\'"+p.password+"\',"+
+      "\'"+p.salt+"\',"+
+      "\'"+p.firstname+"\',"+
+      "\'"+p.secondname+"\',"+
+      "\'"+p.email+"\',"+
+      +p.addressid+
+      ");";
+  console.log(query);
+  doPost(query,res);
+});
+router.get('/selectUsername/:username', function(req, res, next) {
+  p = req.params;
+  query = "SELECT Username FROM User WHERE Username = " + "\'" + p.username + "\'";
+  //query = "SELECT * FROM Address"
+  console.log(query);
+  doGet(query,res);
+});
+router.get('/getUserAccounts/:username', function(req, res, next) {
+  p = req.params;
+  query = "SELECT * FROM Account WHERE Username = " + "\'" + p.username + "\'";
+  //query = "SELECT * FROM Address"
+  console.log(query);
+  doGet(query,res);
+});
+router.get('/getUserBalance/:username/:accnumber', function(req, res, next) {
+  p = req.params;
+  query = "SELECT Balance FROM Account WHERE Username = " + "\'" + p.username + "\'" + " AND AccNumber = " + "\'" + p.accnumber + "\'";
+  //query = "SELECT * FROM Address"
+  console.log(query);
+  doGet(query,res);
+});
+router.post('/insertTransaction/:accFrom/:accTo/:currency/:amount/:datetime', function(req, res, next) {
+  p = req.params;
+  query = "INSERT INTO Transaction (Amount,DateTime,AccNumberTo,AccNumberFrom,Currency) " +
+      "VALUES("+
+      "\'"+p.amount+"\',"+
+      "\'"+p.datetime+"\',"+
+      "\'"+p.accTo+"\'"+
+      "\'"+p.accFrom+"\'"+
+      "\'"+p.currency+"\'"+
       ");";
   console.log(query);
   doPost(query,res);
