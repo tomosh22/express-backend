@@ -122,7 +122,7 @@ router.post('/insertTransaction/:accFrom/:accTo/:currency/:amount/:datetime', fu
   console.log(query);
   doPost(query,res);
 });
-router.get('/getAccountRecentPayees/:accnumber', function(req, res, next) {
+router.get('/getAccountPayees/:accnumber', function(req, res, next) {
   p = req.params;
   query = "SELECT Transaction.AccNumberTo,Account.Sortcode,Account.Name FROM Transaction,Account WHERE Transaction.AccNumberFrom = " + "\'" + p.accnumber + "\'";
   //query = "SELECT * FROM Address"
