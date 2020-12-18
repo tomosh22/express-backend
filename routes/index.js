@@ -102,7 +102,7 @@ router.get('/getUserAccounts/:username', function(req, res, next) {
   console.log(query);
   doGet(query,res);
 });
-router.get('/getUserBalance//:accnumber', function(req, res, next) {
+router.get('/getUserBalance/:accnumber', function(req, res, next) {
   p = req.params;
   query = "SELECT Balance FROM Account WHERE AccNumber = " + "\'" + p.accnumber + "\'";
   //query = "SELECT * FROM Address"
@@ -121,5 +121,12 @@ router.post('/insertTransaction/:accFrom/:accTo/:currency/:amount/:datetime', fu
       ");";
   console.log(query);
   doPost(query,res);
+});
+router.get('/getAccountRecentPayees/:accnumber', function(req, res, next) {
+  p = req.params;
+  query = "SELECT Transaction.AccNumberTo,Account.Sortcode,Account.Name FROM Transaction,Account WHERE Transaction.AccNumberFrom = " + "\'" + p.accnumber + "\'";
+  //query = "SELECT * FROM Address"
+  console.log(query);
+  doGet(query,res);
 });
 module.exports = router;
