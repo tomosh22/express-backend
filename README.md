@@ -1,5 +1,14 @@
 #Express backend
 
+### Set up
+
+* Clone *Express app* from nucode.
+* Run *Docker* on your machine and run command `docker run -p=33333:3306 --name Stubank stubank --default-authentication-plugin=mysql_native_password` being inside */database* directory.
+* Go to the **"Edit Run/Debug configurations dialog"** on the top right of the IntelliJ and run `bin/www`.
+
+---
+
+
 This express application will handle the HTTP requests
 necessary for our react application to interact with our
 database running in docker
