@@ -3,8 +3,8 @@
 ### Set up
 
 * Clone *Express app* from nucode.
-* Run *Docker* on your machine and run command `docker run -p=33333:3306 --name Stubank stubank --default-authentication-plugin=mysql_native_password` being inside */database* directory.
-* Go to the **"Edit Run/Debug configurations dialog"** on the top right of the IntelliJ and run `bin/www`.
+* Run *Docker* on your machine and run command `npm run dockerStart`.
+* Go to the **"Edit Run/Debug configurations dialog"** on the top right of the IntelliJ and run `bin/www` OR use `npm run start`.
 
 ---
 
