@@ -1,5 +1,14 @@
 #Express backend
 
+### Set up
+
+* Clone *Express app* from nucode.
+* Run *Docker* on your machine and run command `npm run dockerStart`.
+* Go to the **"Edit Run/Debug configurations dialog"** on the top right of the IntelliJ and run `bin/www` OR use `npm run start`.
+
+---
+
+
 This express application will handle the HTTP requests
 necessary for our react application to interact with our
 database running in docker

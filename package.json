@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node bin/www"
+    "start": "node bin/www",
+    "dockerStart":  "docker run -p=33333:3306 --name Stubank stubank --default-authentication-plugin=mysql_native_password"
   },
   "dependencies": {
     "@mysql/xdevapi": "^8.0.22",
