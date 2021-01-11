@@ -49,7 +49,12 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/selectLoginUser/:username', function(req, res, next) {
-  query = "SELECT Username,FirstName,SecondName,Email FROM User WHERE Username = "+"\'"+req.params.username+"\'";
+  query = "SELECT Username,Salt,FirstName,SecondName,Email FROM User WHERE Username = "+"\'"+req.params.username+"\'";
+  doGet(query,res);
+});
+
+router.get('/selectHashAndSalt/:username', function(req, res, next) {
+  query = "SELECT Password,Salt FROM User WHERE Username = "+"\'"+req.params.username+"\'";
   doGet(query,res);
 });
 
