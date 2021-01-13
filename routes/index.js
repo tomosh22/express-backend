@@ -31,6 +31,7 @@ function doPost(sql,res)
 {
   var con = mysql.createConnection(config);
   con.connect(function(err) {
+    console.log("hi")
     if (err) throw err;
     // if connection is successful
     con.query(sql,function (err, result, fields) {
@@ -58,21 +59,24 @@ router.get('/selectHashAndSalt/:username', function(req, res, next) {
   doGet(query,res);
 });
 
-router.post('/insertAddress/:line1/:line2/:postcode', function(req, res, next) {
+router.post('/insertAddress/:number/:street/:townorcity/:county/:postcode', function(req, res, next) {
   p = req.params;
-  query = "INSERT INTO Address (Line1,Line2,Postcode) " +
+  query = "INSERT INTO Address (Number,Street,TownOrCity,County,Postcode) " +
       "VALUES("+
-      "\'"+p.line1+"\',"+
-      "\'"+p.line2+"\',"+
+      "\'"+p.number+"\',"+
+      "\'"+p.street+"\',"+
+      "\'"+p.townorcity+"\',"+
+      "\'"+p.county+"\',"+
       "\'"+p.postcode+"\'"+
       ");";
   console.log(query);
   doPost(query,res);
 });
 
-router.get('/selectAddress/:line1/:line2/:postcode', function(req, res, next) {
+router.get('/selectAddress/:number/:street/:townorcity/:county/:postcode', function(req, res, next) {
   p = req.params;
-  query = "SELECT AddressId FROM Address WHERE Line1 = "+"\'"+ p.line1 + "\'"+" AND Line2 = " + "\'"+p.line2 + "\'"+" AND Postcode = " + "\'"+ p.postcode +"\'";
+  query = "SELECT AddressId FROM Address WHERE Number = "+"\'"+ p.number + "\'"+" AND Street = " + "\'"+p.street + "\'"+" " +
+      "AND TownOrCity = "+"\'"+ p.townorcity + "\'"+" AND County = "+"\'"+ p.county + "\'"+" AND Postcode = " + "\'"+ p.postcode +"\'";
   //query = "SELECT * FROM Address"
   console.log(query);
   doGet(query,res);
