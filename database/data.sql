@@ -39,12 +39,12 @@ CREATE TABLE Account
 
 CREATE TABLE Favourites
 (
+    FavouriteId int NOT NULL AUTO_INCREMENT,
     Username varchar(45) NOT NULL ,
     Name varchar(45) NOT NULL ,
     AccNumber char(8) NOT NULL ,
-    SortCode char(8) NOT NULL,
 
-    PRIMARY KEY (Username)
+    PRIMARY KEY (FavouriteId)
 )
 
 CREATE TABLE Transaction

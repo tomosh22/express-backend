@@ -127,24 +127,23 @@ router.post('/insertTransaction/:accFrom/:accTo/:currency/:amount/:reference/:ta
       "VALUES("+
       "\'"+p.amount+"\',"+
       "\'"+p.datetime+"\',"+
-      "\'"+p.accTo+"\'"+
-      "\'"+p.accFrom+"\'"+
-      "\'"+p.currency+"\'"+
-      "\'"+p.reference+"\'"+
+      "\'"+p.accTo+"\',"+
+      "\'"+p.accFrom+"\',"+
+      "\'"+p.currency+"\',"+
+      "\'"+p.reference+"\',"+
       "\'"+p.tag+"\'"+
       ");";
   console.log(query);
   doPost(query,res);
 });
 
-router.post('/setFavouritePayees/:username/:name/:accNumber/:sortCode', function(req, res, next){
+router.post('/setFavouritePayees/:username/:accName/:accNumber', function(req, res, next){
   p = req.params;
-  query = "INSERT INTO Favourites (Username,Name,AccNumber,SortCode) " +
+  query = "INSERT INTO Favourites (Username,Name,AccNumber) " +
       "VALUES("+
       "\'"+p.username+"\',"+
-      "\'"+p.name+"\',"+
-      "\'"+p.accNumber+"\',"+
-      "\'"+p.sortCode+"\',"+
+      "\'"+p.accName+"\',"+
+      "\'"+p.accNumber+"\'"+
       ");";
   console.log(query);
   doPost(query,res);
@@ -152,11 +151,12 @@ router.post('/setFavouritePayees/:username/:name/:accNumber/:sortCode', function
 
 router.get('/getFavouritePayees/:username', function(req, res, next) {
   p = req.params;
-  query = "SELECT Name,AccNumber,SortCode FROM Favourites WHERE Username = " + "\'" + p.username + "\'";
-  //query = "SELECT * FROM Address"
+  query = "SELECT Name,AccNumber FROM Favourites WHERE Username = " + "\'" + p.username + "\'";
   console.log(query);
   doGet(query,res);
 });
+
+
 
 
 module.exports = router;
