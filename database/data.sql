@@ -37,6 +37,16 @@ CREATE TABLE Account
     FOREIGN KEY (Username) REFERENCES User(Username)
 );
 
+CREATE TABLE Favourites
+(
+    Username varchar(45) NOT NULL ,
+    Name varchar(45) NOT NULL ,
+    AccNumber char(8) NOT NULL ,
+    SortCode char(8) NOT NULL,
+
+    PRIMARY KEY (Username)
+)
+
 CREATE TABLE Transaction
 (
     TransactionId int NOT NULL AUTO_INCREMENT,
@@ -44,6 +54,9 @@ CREATE TABLE Transaction
     DateTime datetime NOT NULL ,
     AccNumberTo varchar(45) NOT NULL ,
     AccNumberFrom varchar(45) NOT NULL ,
+    Currency varchar(1) NOT NULL,
+    Reference varchar(20) NOT NULL,
+    Tag varchar(20) NOT NULL,
 
     PRIMARY KEY (TransactionId),
     FOREIGN KEY (AccNumberTo) REFERENCES Account(AccNumber),
@@ -55,6 +68,6 @@ INSERT INTO User VALUES ("joeb","password","saltsaltsaltsalt","Joe","Bloggs","jo
 INSERT INTO User VALUES("bobg","password","saltsaltsaltsalt","Bob","Green","bobg@gmail.com",2);
 INSERT INTO Account VALUES("Joe's current account","current",100,"£","joeb","11111111");
 INSERT INTO Account VALUES("Bob's current account","current",350,"£","bobg","22222222");
-INSERT INTO Transaction VALUES(1,10,"2020-12-02 12:51:00","22222222","11111111");
-INSERT INTO Transaction VALUES(2,20,"2020-12-02 13:00:00","22222222","11111111");
-INSERT INTO Transaction VALUES(3,10,"2020-12-01 12:00:00","22222222","11111111");
+INSERT INTO Transaction VALUES(1,10,"2020-12-02 12:51:00","22222222","11111111","£","Pizza night","Eating Out");
+INSERT INTO Transaction VALUES(2,20,"2020-12-02 13:00:00","22222222","11111111", "£", "Car ride","Transport");
+INSERT INTO Transaction VALUES(3,10,"2020-12-01 12:00:00","22222222","11111111", "£", "Cinema","Entertainment");

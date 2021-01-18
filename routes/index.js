@@ -104,6 +104,7 @@ router.get('/selectUsername/:username', function(req, res, next) {
   console.log(query);
   doGet(query,res);
 });
+
 router.get('/getUserAccounts/:username', function(req, res, next) {
   p = req.params;
   query = "SELECT * FROM Account WHERE Username = " + "\'" + p.username + "\'";
@@ -111,6 +112,7 @@ router.get('/getUserAccounts/:username', function(req, res, next) {
   console.log(query);
   doGet(query,res);
 });
+
 router.get('/getUserBalance/:accnumber', function(req, res, next) {
   p = req.params;
   query = "SELECT Balance FROM Account WHERE AccNumber = " + "\'" + p.accnumber + "\'";
@@ -118,24 +120,43 @@ router.get('/getUserBalance/:accnumber', function(req, res, next) {
   console.log(query);
   doGet(query,res);
 });
-router.post('/insertTransaction/:accFrom/:accTo/:currency/:amount/:datetime', function(req, res, next) {
+
+router.post('/insertTransaction/:accFrom/:accTo/:currency/:amount/:reference/:tag/:datetime', function(req, res, next) {
   p = req.params;
-  query = "INSERT INTO Transaction (Amount,DateTime,AccNumberTo,AccNumberFrom,Currency) " +
+  query = "INSERT INTO Transaction (Amount,DateTime,AccNumberTo,AccNumberFrom,Currency,Reference,Tag) " +
       "VALUES("+
       "\'"+p.amount+"\',"+
       "\'"+p.datetime+"\',"+
       "\'"+p.accTo+"\'"+
       "\'"+p.accFrom+"\'"+
       "\'"+p.currency+"\'"+
+      "\'"+p.reference+"\'"+
+      "\'"+p.tag+"\'"+
       ");";
   console.log(query);
   doPost(query,res);
 });
-router.get('/getAccountPayees/:accnumber', function(req, res, next) {
+
+router.post('/setFavouritePayees/:username/:name/:accNumber/:sortCode', function(req, res, next){
   p = req.params;
-  query = "SELECT Transaction.AccNumberTo,Account.Sortcode,Account.Name FROM Transaction,Account WHERE Transaction.AccNumberFrom = " + "\'" + p.accnumber + "\'";
+  query = "INSERT INTO Favourites (Username,Name,AccNumber,SortCode) " +
+      "VALUES("+
+      "\'"+p.username+"\',"+
+      "\'"+p.name+"\',"+
+      "\'"+p.accNumber+"\',"+
+      "\'"+p.sortCode+"\',"+
+      ");";
+  console.log(query);
+  doPost(query,res);
+});
+
+router.get('/getFavouritePayees/:username', function(req, res, next) {
+  p = req.params;
+  query = "SELECT Name,AccNumber,SortCode FROM Favourites WHERE Username = " + "\'" + p.username + "\'";
   //query = "SELECT * FROM Address"
   console.log(query);
   doGet(query,res);
 });
+
+
 module.exports = router;
