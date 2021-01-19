@@ -121,13 +121,14 @@ router.get('/getUserBalance/:accnumber', function(req, res, next) {
   doGet(query,res);
 });
 
-router.post('/insertTransaction/:accFrom/:accTo/:currency/:amount/:reference/:tag/:datetime', function(req, res, next) {
+router.post('/insertTransaction/:accFrom/:accNumber/:currency/:amount/:reference/:tag/:datetime/:accName', function(req, res, next) {
   p = req.params;
-  query = "INSERT INTO Transaction (Amount,DateTime,AccNumberTo,AccNumberFrom,Currency,Reference,Tag) " +
+  query = "INSERT INTO Transaction (Amount,DateTime,NameTo,AccNumberTo,AccNumberFrom,Currency,Reference,Tag) " +
       "VALUES("+
       "\'"+p.amount+"\',"+
       "\'"+p.datetime+"\',"+
-      "\'"+p.accTo+"\',"+
+      "\'"+p.accName+"\',"+
+      "\'"+p.accNumber+"\',"+
       "\'"+p.accFrom+"\',"+
       "\'"+p.currency+"\',"+
       "\'"+p.reference+"\',"+
@@ -155,7 +156,12 @@ router.get('/getFavouritePayees/:username', function(req, res, next) {
   console.log(query);
   doGet(query,res);
 });
-
+router.get('/getAccountPayees/:accFrom', function(req, res, next) {
+  p = req.params;
+  query = "SELECT AccNumberTo, NameTo FROM Transaction WHERE AccNumberFrom = " + "\'" + p.accFrom + "\'";
+  console.log(query);
+  doGet(query,res);
+});
 
 
 
