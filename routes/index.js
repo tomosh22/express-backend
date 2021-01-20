@@ -104,6 +104,7 @@ router.get('/selectUsername/:username', function(req, res, next) {
   console.log(query);
   doGet(query,res);
 });
+
 router.get('/getUserAccounts/:username', function(req, res, next) {
   p = req.params;
   query = "SELECT * FROM Account WHERE Username = " + "\'" + p.username + "\'";
@@ -111,6 +112,7 @@ router.get('/getUserAccounts/:username', function(req, res, next) {
   console.log(query);
   doGet(query,res);
 });
+
 router.get('/getUserBalance/:accnumber', function(req, res, next) {
   p = req.params;
   query = "SELECT Balance FROM Account WHERE AccNumber = " + "\'" + p.accnumber + "\'";
@@ -118,24 +120,49 @@ router.get('/getUserBalance/:accnumber', function(req, res, next) {
   console.log(query);
   doGet(query,res);
 });
-router.post('/insertTransaction/:accFrom/:accTo/:currency/:amount/:datetime', function(req, res, next) {
+
+router.post('/insertTransaction/:accFrom/:accNumber/:currency/:amount/:reference/:tag/:datetime/:accName', function(req, res, next) {
   p = req.params;
-  query = "INSERT INTO Transaction (Amount,DateTime,AccNumberTo,AccNumberFrom,Currency) " +
+  query = "INSERT INTO Transaction (Amount,DateTime,NameTo,AccNumberTo,AccNumberFrom,Currency,Reference,Tag) " +
       "VALUES("+
       "\'"+p.amount+"\',"+
       "\'"+p.datetime+"\',"+
-      "\'"+p.accTo+"\'"+
-      "\'"+p.accFrom+"\'"+
-      "\'"+p.currency+"\'"+
+      "\'"+p.accName+"\',"+
+      "\'"+p.accNumber+"\',"+
+      "\'"+p.accFrom+"\',"+
+      "\'"+p.currency+"\',"+
+      "\'"+p.reference+"\',"+
+      "\'"+p.tag+"\'"+
       ");";
   console.log(query);
   doPost(query,res);
 });
-router.get('/getAccountPayees/:accnumber', function(req, res, next) {
+
+router.post('/setFavouritePayees/:username/:accName/:accNumber', function(req, res, next){
   p = req.params;
-  query = "SELECT Transaction.AccNumberTo,Account.Sortcode,Account.Name FROM Transaction,Account WHERE Transaction.AccNumberFrom = " + "\'" + p.accnumber + "\'";
-  //query = "SELECT * FROM Address"
+  query = "INSERT INTO Favourites (Username,Name,AccNumber) " +
+      "VALUES("+
+      "\'"+p.username+"\',"+
+      "\'"+p.accName+"\',"+
+      "\'"+p.accNumber+"\'"+
+      ");";
+  console.log(query);
+  doPost(query,res);
+});
+
+router.get('/getFavouritePayees/:username', function(req, res, next) {
+  p = req.params;
+  query = "SELECT Name,AccNumber FROM Favourites WHERE Username = " + "\'" + p.username + "\'";
   console.log(query);
   doGet(query,res);
 });
+router.get('/getAccountPayees/:accFrom', function(req, res, next) {
+  p = req.params;
+  query = "SELECT AccNumberTo, NameTo FROM Transaction WHERE AccNumberFrom = " + "\'" + p.accFrom + "\'";
+  console.log(query);
+  doGet(query,res);
+});
+
+
+
 module.exports = router;
