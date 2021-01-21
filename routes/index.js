@@ -164,5 +164,13 @@ router.get('/getAccountPayees/:accFrom', function(req, res, next) {
 });
 
 
+router.post('/updateAccountBalance/:accNumber/:amount', function(req, res, next) {
+  p = req.params;
+  query = "UPDATE Account SET Balance = Balance + " + "\'" + p.amount + "\'" + " WHERE AccNumber = " + "\'" + p.accNumber + "\'";
+  console.log(query);
+  doPost(query,res);
+});
+
+
 
 module.exports = router;
