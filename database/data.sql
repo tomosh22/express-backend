@@ -46,6 +46,14 @@ CREATE TABLE Favourites
 
     PRIMARY KEY (FavouriteId)
 )
+CREATE TABLE Tags
+(
+    TagId int NOT NULL AUTO_INCREMENT,
+    Username varchar(45) NOT NULL ,
+    Tag varchar(50) NOT NULL,
+
+    PRIMARY KEY (TagId)
+)
 
 CREATE TABLE Transaction
 (

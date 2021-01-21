@@ -171,6 +171,29 @@ router.post('/updateAccountBalance/:accNumber/:amount', function(req, res, next)
   doPost(query,res);
 });
 
+router.post('/setTag/:username/:tagName', function(req, res, next){
+  p = req.params;
+  query = "INSERT INTO Tags (Username,Tag) " +
+      "VALUES("+
+      "\'"+p.username+"\',"+
+      "\'"+p.tagName+"\'"+
+      ");";
+  console.log(query);
+  doPost(query,res);
+});
 
+router.get('/getTag/:username', function(req, res, next) {
+  p = req.params;
+  query = "SELECT Tag FROM Tags WHERE Username = " + "\'" + p.username + "\'";
+  console.log(query);
+  doGet(query,res);
+});
+
+router.post('/deleteTag/:username/:tagName', function(req, res, next){
+  p = req.params;
+  query = "DELETE FROM Tags WHERE Username = " + "\'" + p.username + "\'" + " AND Tag = " + "\'" + p.tagName + "\'";
+  console.log(query);
+  doPost(query,res);
+});
 
 module.exports = router;
