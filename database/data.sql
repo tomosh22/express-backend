@@ -63,9 +63,8 @@ CREATE TABLE Transaction
     NameTo varchar(50) NOT NULL,
     AccNumberTo varchar(45) NOT NULL ,
     AccNumberFrom varchar(45) NOT NULL ,
-    Currency varchar(1) NOT NULL,
-    Reference varchar(20) NOT NULL,
-    Tag varchar(20) NOT NULL,
+    Reference varchar(20),
+    Tag varchar(20),
 
     PRIMARY KEY (TransactionId),
     FOREIGN KEY (AccNumberTo) REFERENCES Account(AccNumber),
