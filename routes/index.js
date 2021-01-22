@@ -141,6 +141,12 @@ router.get('/getUserBalance/:accnumber', function(req, res, next) {
   console.log(query);
   doGet(query,res);
 });
+router.get('/getUserTransactions/:username', function(req, res, next) {
+  p = req.params;
+  query = "SELECT * FROM Transaction WHERE EXISTS (SELECT * FROM Account WHERE (Transaction.AccNumberFrom = Account.AccNumber OR Transaction.AccNumberTo = Account.AccNumber) AND Account.Username = " + "\'" + p.username + "\'"+")";
+  console.log(query);
+  doGet(query,res);
+});
 router.post('/insertTransaction/:accFrom/:accTo/:currency/:amount/:datetime', function(req, res, next) {
   p = req.params;
   query = "INSERT INTO Transaction (Amount,DateTime,AccNumberTo,AccNumberFrom,Currency) " +
