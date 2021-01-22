@@ -113,6 +113,13 @@ router.get('/getUserAccounts/:username', function(req, res, next) {
   doGet(query,res);
 });
 
+router.get('/getUserTransactions/:username', function(req, res, next) {
+  p = req.params;
+  query = "SELECT * FROM Transaction WHERE EXISTS (SELECT * FROM Account WHERE (Transaction.AccNumberFrom = Account.AccNumber OR Transaction.AccNumberTo = Account.AccNumber) AND Account.Username = " + "\'" + p.username + "\'"+")";
+  console.log(query);
+  doGet(query,res);
+});
+
 router.get('/getUserBalance/:accnumber', function(req, res, next) {
   p = req.params;
   query = "SELECT Balance FROM Account WHERE AccNumber = " + "\'" + p.accnumber + "\'";
