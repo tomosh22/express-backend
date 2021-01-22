@@ -147,7 +147,7 @@ router.get('/getUserTransactions/:username', function(req, res, next) {
   console.log(query);
   doGet(query,res);
 });
-router.post('/insertTransaction/:accFrom/:accTo/:currency/:amount/:datetime', function(req, res, next) {
+router.post('/insertTransaction/:accFrom/:accNumber/:currency/:amount/:reference/:tag/:datetime/:accName', function(req, res, next) {
   p = req.params;
   query = "INSERT INTO Transaction (Amount,DateTime,AccNumberTo,AccNumberFrom,Currency) " +
       "VALUES("+
