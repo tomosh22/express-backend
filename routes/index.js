@@ -122,22 +122,21 @@ router.get('/getUserTransactions/:username', function(req, res, next) {
 
 router.get('/getUserBalance/:accnumber', function(req, res, next) {
   p = req.params;
-  query = "SELECT Balance FROM Account WHERE AccNumber = " + "\'" + p.accnumber + "\'";
+  query = "SELECT Balance,Currency FROM Account WHERE AccNumber = " + "\'" + p.accnumber + "\'";
   //query = "SELECT * FROM Address"
   console.log(query);
   doGet(query,res);
 });
 
-router.post('/insertTransaction/:accFrom/:accNumber/:currency/:amount/:reference/:tag/:datetime/:accName', function(req, res, next) {
+router.post('/insertTransaction/:accFrom/:accNumber/:amount/:reference/:tag/:datetime/:accName', function(req, res, next) {
   p = req.params;
-  query = "INSERT INTO Transaction (Amount,DateTime,NameTo,AccNumberTo,AccNumberFrom,Currency,Reference,Tag) " +
+  query = "INSERT INTO Transaction (Amount,DateTime,NameTo,AccNumberTo,AccNumberFrom,Reference,Tag) " +
       "VALUES("+
       "\'"+p.amount+"\',"+
       "\'"+p.datetime+"\',"+
       "\'"+p.accName+"\',"+
       "\'"+p.accNumber+"\',"+
       "\'"+p.accFrom+"\',"+
-      "\'"+p.currency+"\',"+
       "\'"+p.reference+"\',"+
       "\'"+p.tag+"\'"+
       ");";
