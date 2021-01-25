@@ -1,12 +1,13 @@
-CREATE TABLE Address(
-                        AddressId int NOT NULL AUTO_INCREMENT,
-                        Number varchar(45) NOT NULL ,
-                        Street varchar(45) NOT NULL ,
-                        TownOrCity varchar(45) NOT NULL ,
-                        County varchar(45) NOT NULL ,
-                        Postcode varchar(45) NOT NULL ,
+CREATE TABLE Address
+(
+    AddressId int NOT NULL AUTO_INCREMENT,
+    Number varchar(45) NOT NULL ,
+     Street varchar(45) NOT NULL ,
+    TownOrCity varchar(45) NOT NULL ,
+    County varchar(45) NOT NULL ,
+    Postcode varchar(45) NOT NULL ,
 
-                        PRIMARY KEY (AddressId)
+    PRIMARY KEY (AddressId)
 );
 
 CREATE TABLE User
@@ -32,7 +33,6 @@ CREATE TABLE Account
     Username varchar(45) NOT NULL ,
     AccNumber char(8) NOT NULL ,
 
-
     PRIMARY KEY (AccNumber),
     FOREIGN KEY (Username) REFERENCES User(Username)
 );
@@ -46,7 +46,8 @@ CREATE TABLE Favourites
 
     PRIMARY KEY (FavouriteId),
     FOREIGN KEY (Username) REFERENCES User(Username)
-)
+);
+
 CREATE TABLE Tags
 (
     TagId int NOT NULL AUTO_INCREMENT,
@@ -55,7 +56,7 @@ CREATE TABLE Tags
 
     PRIMARY KEY (TagId),
     FOREIGN KEY (Username) REFERENCES User(Username)
-)
+);
 
 CREATE TABLE Transaction
 (
@@ -88,7 +89,6 @@ CREATE TABLE FutureTransaction
     FOREIGN KEY (AccNumberTo) REFERENCES Account(AccNumber),
     FOREIGN KEY (AccNumberFrom) REFERENCES Account(AccNumber)
 );
-
 
 
 
