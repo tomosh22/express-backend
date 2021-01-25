@@ -44,7 +44,8 @@ CREATE TABLE Favourites
     Name varchar(45) NOT NULL ,
     AccNumber char(8) NOT NULL ,
 
-    PRIMARY KEY (FavouriteId)
+    PRIMARY KEY (FavouriteId),
+    FOREIGN KEY (Username) REFERENCES User(Username)
 )
 CREATE TABLE Tags
 (
@@ -52,7 +53,8 @@ CREATE TABLE Tags
     Username varchar(45) NOT NULL ,
     Tag varchar(50) NOT NULL,
 
-    PRIMARY KEY (TagId)
+    PRIMARY KEY (TagId),
+    FOREIGN KEY (Username) REFERENCES User(Username)
 )
 
 CREATE TABLE Transaction
@@ -63,9 +65,8 @@ CREATE TABLE Transaction
     NameTo varchar(50) NOT NULL,
     AccNumberTo varchar(45) NOT NULL ,
     AccNumberFrom varchar(45) NOT NULL ,
-    Currency varchar(1) NOT NULL,
-    Reference varchar(20) NOT NULL,
-    Tag varchar(20) NOT NULL,
+    Reference varchar(20),
+    Tag varchar(20),
 
     PRIMARY KEY (TransactionId),
     FOREIGN KEY (AccNumberTo) REFERENCES Account(AccNumber),
@@ -81,10 +82,10 @@ INSERT INTO Account VALUES("Joe's current account","current",100,"£","joeb","11
 INSERT INTO Account VALUES("Bob's current account","current",350,"£","bobg","22222222");
 INSERT INTO Account VALUES("Bob's savings account", "savings", 50, "£", "bobg", "33333333");
 INSERT INTO Account VALUES("Frank's current account","current",75,"£","franks","44444444");
-INSERT INTO Transaction VALUES(1,10,"2020-12-02 12:51:00","bob","22222222","11111111","£","Pizza night","Eating Out");
-INSERT INTO Transaction VALUES(2,20,"2020-12-02 13:00:00","bob","22222222","11111111", "£", "Car ride","Transport");
-INSERT INTO Transaction VALUES(3,10,"2020-12-01 12:00:00","bob","22222222","11111111", "£", "Cinema","Entertainment");
-INSERT INTO Transaction VALUES(4,10,"2020-12-01 14:00:00","joe","11111111","22222222", "£", "Food","Eating Out");
-INSERT INTO Transaction VALUES(5,10,"2020-12-01 14:00:00","frank","44444444","22222222", "£", "Mini Golf","Entertainment");
+INSERT INTO Transaction VALUES(1,10,"2020-12-02 12:51:00","bob","22222222","11111111","Pizza night","Eating Out");
+INSERT INTO Transaction VALUES(2,20,"2020-12-02 13:00:00","bob","22222222","11111111","Car ride","Transport");
+INSERT INTO Transaction VALUES(3,10,"2020-12-01 12:00:00","bob","22222222","11111111","Cinema","Entertainment");
+INSERT INTO Transaction VALUES(4,10,"2020-12-01 14:00:00","joe","11111111","22222222","Food","Eating Out");
+INSERT INTO Transaction VALUES(5,10,"2020-12-01 14:00:00","frank","44444444","22222222","Mini Golf","Entertainment");
 INSERT INTO Favourites VALUES(1, "bobg", "Joe", "11111111");
 INSERT INTO Favourites VALUES(2, "bobg", "Frank", "44444444");

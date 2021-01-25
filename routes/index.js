@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var { param, validationResult }= require('express-validator');
 var mysql = require("mysql");
 var config = {
   user:"user",
@@ -137,7 +138,7 @@ router.post('/insertAccount/:accountName/:type/:balance/:currency/:username/:acc
 });
 router.get('/getUserBalance/:accnumber', function(req, res, next) {
   p = req.params;
-  query = "SELECT Balance FROM Account WHERE AccNumber = " + "\'" + p.accnumber + "\'";
+  query = "SELECT Balance,Currency FROM Account WHERE AccNumber = " + "\'" + p.accnumber + "\'";
   //query = "SELECT * FROM Address"
   console.log(query);
   doGet(query,res);
@@ -150,14 +151,13 @@ router.get('/getUserTransactions/:username', function(req, res, next) {
 });
 router.post('/insertTransaction/:accFrom/:accNumber/:currency/:amount/:reference/:tag/:datetime/:accName', function(req, res, next) {
   p = req.params;
-  query = "INSERT INTO Transaction (Amount,DateTime,NameTo,AccNumberTo,AccNumberFrom,Currency,Reference,Tag) " +
+  query = "INSERT INTO Transaction (Amount,DateTime,NameTo,AccNumberTo,AccNumberFrom,Reference,Tag) " +
       "VALUES("+
       "\'"+p.amount+"\',"+
       "\'"+p.datetime+"\',"+
       "\'"+p.accName+"\',"+
       "\'"+p.accNumber+"\',"+
       "\'"+p.accFrom+"\',"+
-      "\'"+p.currency+"\',"+
       "\'"+p.reference+"\',"+
       "\'"+p.tag+"\'"+
       ");";
@@ -209,18 +209,31 @@ router.post('/setTag/:username/:tagName', function(req, res, next){
   doPost(query,res);
 });
 
-router.get('/getTag/:username', function(req, res, next) {
-  p = req.params;
-  query = "SELECT Tag FROM Tags WHERE Username = " + "\'" + p.username + "\'";
-  console.log(query);
-  doGet(query,res);
+router.get('/getTag/:username',
+    //param(['username',"Invalid Username"]).notEmpty(),
+    function(req, res, next) {
+    //const errors=validationResult(req);
+    //if (!errors.isEmpty()){
+      //console.log(errors)
+    //}else {
+      query = "SELECT Tag FROM Tags WHERE Username = " + "\'" + p.username + "\'";
+      console.log(query);
+      doGet(query, res);
+    //}
 });
 
-router.post('/deleteTag/:username/:tagName', function(req, res, next){
-  p = req.params;
-  query = "DELETE FROM Tags WHERE Username = " + "\'" + p.username + "\'" + " AND Tag = " + "\'" + p.tagName + "\'";
-  console.log(query);
-  doPost(query,res);
+router.post('/deleteTag/:username/:tagName',
+    //param(['username',"Invalid username"]).notEmpty(),
+    function(req, res, next){
+    //const errors=validationResult(req);
+    //if (!errors.isEmpty()){
+      //console.log(errors)
+    //}else {
+      p = req.params;
+      query = "DELETE FROM Tags WHERE Username = " + "\'" + p.username + "\'" + " AND Tag = " + "\'" + p.tagName + "\'";
+      console.log(query);
+      doPost(query, res);
+    //}
 });
 
 module.exports = router;
