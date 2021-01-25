@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var { param, validationResult }= require('express-validator');
 var mysql = require("mysql");
 var config = {
   user:"user",
@@ -188,18 +189,31 @@ router.post('/setTag/:username/:tagName', function(req, res, next){
   doPost(query,res);
 });
 
-router.get('/getTag/:username', function(req, res, next) {
-  p = req.params;
-  query = "SELECT Tag FROM Tags WHERE Username = " + "\'" + p.username + "\'";
-  console.log(query);
-  doGet(query,res);
+router.get('/getTag/:username',
+    //param(['username',"Invalid Username"]).notEmpty(),
+    function(req, res, next) {
+    //const errors=validationResult(req);
+    //if (!errors.isEmpty()){
+      //console.log(errors)
+    //}else {
+      query = "SELECT Tag FROM Tags WHERE Username = " + "\'" + p.username + "\'";
+      console.log(query);
+      doGet(query, res);
+    //}
 });
 
-router.post('/deleteTag/:username/:tagName', function(req, res, next){
-  p = req.params;
-  query = "DELETE FROM Tags WHERE Username = " + "\'" + p.username + "\'" + " AND Tag = " + "\'" + p.tagName + "\'";
-  console.log(query);
-  doPost(query,res);
+router.post('/deleteTag/:username/:tagName',
+    //param(['username',"Invalid username"]).notEmpty(),
+    function(req, res, next){
+    //const errors=validationResult(req);
+    //if (!errors.isEmpty()){
+      //console.log(errors)
+    //}else {
+      p = req.params;
+      query = "DELETE FROM Tags WHERE Username = " + "\'" + p.username + "\'" + " AND Tag = " + "\'" + p.tagName + "\'";
+      console.log(query);
+      doPost(query, res);
+    //}
 });
 
 module.exports = router;
