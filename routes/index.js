@@ -78,7 +78,6 @@ router.get('/selectAddress/:number/:street/:townorcity/:county/:postcode', funct
   p = req.params;
   query = "SELECT AddressId FROM Address WHERE Number = "+"\'"+ p.number + "\'"+" AND Street = " + "\'"+p.street + "\'"+" " +
       "AND TownOrCity = "+"\'"+ p.townorcity + "\'"+" AND County = "+"\'"+ p.county + "\'"+" AND Postcode = " + "\'"+ p.postcode +"\'";
-  //query = "SELECT * FROM Address"
   console.log(query);
   doGet(query,res);
 });
@@ -101,7 +100,6 @@ router.post('/insertUser/:username/:password/:salt/:firstname/:secondname/:email
 router.get('/selectUsername/:username', function(req, res, next) {
   p = req.params;
   query = "SELECT Username FROM User WHERE Username = " + "\'" + p.username + "\'";
-  //query = "SELECT * FROM Address"
   console.log(query);
   doGet(query,res);
 });
@@ -109,18 +107,35 @@ router.get('/selectUsername/:username', function(req, res, next) {
 router.get('/getUserAccounts/:username', function(req, res, next) {
   p = req.params;
   query = "SELECT * FROM Account WHERE Username = " + "\'" + p.username + "\'";
-  //query = "SELECT * FROM Address"
   console.log(query);
   doGet(query,res);
 });
-
-router.get('/getUserTransactions/:username', function(req, res, next) {
+router.get('/getAccountNames/:username/:accountName', function(req, res, next) {
   p = req.params;
-  query = "SELECT * FROM Transaction WHERE EXISTS (SELECT * FROM Account WHERE (Transaction.AccNumberFrom = Account.AccNumber OR Transaction.AccNumberTo = Account.AccNumber) AND Account.Username = " + "\'" + p.username + "\'"+")";
+  query = "SELECT * FROM Account WHERE Username = " + "\'" + p.username + "\'"+ " AND Name = " + "\'" + p.accountName + "\'";
   console.log(query);
   doGet(query,res);
 });
-
+router.get('/getAccountNumbers/:accountNumber', function(req, res, next) {
+  p = req.params;
+  query = "SELECT * FROM Account WHERE AccNumber = " + "\'" + p.accountNumber + "\'";
+  console.log(query);
+  doGet(query,res);
+});
+router.post('/insertAccount/:accountName/:type/:balance/:currency/:username/:accountNumber', function(req, res, next) {
+  p = req.params;
+  query = "INSERT INTO Account (Name,Type,Balance,Currency,Username,AccNumber) " +
+      "VALUES("+
+      "\'"+p.accountName+"\',"+
+      "\'"+p.type+"\',"+
+      +p.balance+","+
+      "\'"+p.currency+"\',"+
+      "\'"+p.username+"\',"+
+      "\'"+p.accountNumber+"\'"+
+      ");";
+  console.log(query);
+  doPost(query,res);
+});
 router.get('/getUserBalance/:accnumber', function(req, res, next) {
   p = req.params;
   query = "SELECT Balance,Currency FROM Account WHERE AccNumber = " + "\'" + p.accnumber + "\'";
@@ -128,8 +143,13 @@ router.get('/getUserBalance/:accnumber', function(req, res, next) {
   console.log(query);
   doGet(query,res);
 });
-
-router.post('/insertTransaction/:accFrom/:accNumber/:amount/:reference/:tag/:datetime/:accName', function(req, res, next) {
+router.get('/getUserTransactions/:username', function(req, res, next) {
+  p = req.params;
+  query = "SELECT * FROM Transaction WHERE EXISTS (SELECT * FROM Account WHERE (Transaction.AccNumberFrom = Account.AccNumber OR Transaction.AccNumberTo = Account.AccNumber) AND Account.Username = " + "\'" + p.username + "\'"+")";
+  console.log(query);
+  doGet(query,res);
+});
+router.post('/insertTransaction/:accFrom/:accNumber/:currency/:amount/:reference/:tag/:datetime/:accName', function(req, res, next) {
   p = req.params;
   query = "INSERT INTO Transaction (Amount,DateTime,NameTo,AccNumberTo,AccNumberFrom,Reference,Tag) " +
       "VALUES("+
