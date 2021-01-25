@@ -165,6 +165,22 @@ router.post('/insertTransaction/:accFrom/:accNumber/:amount/:reference/:tag/:dat
   doPost(query,res);
 });
 
+router.post('/insertFutureTransaction/:accFrom/:accNumber/:amount/:reference/:tag/:datetime/:accName', function(req, res, next) {
+  p = req.params;
+  query = "INSERT INTO FutureTransaction (Amount,DateTime,NameTo,AccNumberTo,AccNumberFrom,Reference,Tag) " +
+      "VALUES("+
+      "\'"+p.amount+"\',"+
+      "\'"+p.datetime+"\',"+
+      "\'"+p.accName+"\',"+
+      "\'"+p.accNumber+"\',"+
+      "\'"+p.accFrom+"\',"+
+      "\'"+p.reference+"\',"+
+      "\'"+p.tag+"\'"+
+      ");";
+  console.log(query);
+  doPost(query,res);
+});
+
 router.post('/setFavouritePayees/:username/:accName/:accNumber', function(req, res, next){
   p = req.params;
   query = "INSERT INTO Favourites (Username,Name,AccNumber) " +
