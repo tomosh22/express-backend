@@ -101,11 +101,11 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-
+var sqlI = "^((?!INPUT|SCRIPT|ALERT|TRUNCATE|DELETE|INSERT|DROP|NULL|SELECT|>|<|}|{).)*$";
 
 
 router.get('/selectLoginUser/:username',[
-    param('username').notEmpty()],
+    param('username').notEmpty().matches(sqlI)],
     function(req, res, next) {
     /*
     Reads Username, Salt, FirstName, SecondName and Email from the User Table
@@ -120,7 +120,7 @@ router.get('/selectLoginUser/:username',[
 });
 
 router.get('/selectHashAndSaltAndSecret/:username',[
-    param('username').notEmpty()],
+    param('username').notEmpty().matches(sqlI)],
     function(req, res, next) {
     /*
     Reads Password and Salt from the User Table
@@ -135,11 +135,11 @@ router.get('/selectHashAndSaltAndSecret/:username',[
 });
 
 router.post('/insertAddress/:number/:street/:townorcity/:county/:postcode',[
-    param('number').notEmpty().isLength({ max:45 }),
-    param('street').notEmpty().isLength({ max:45 }),
-    param('townorcity').notEmpty().isLength({ max:45 }),
-    param('county').notEmpty().isLength({ max:45 }),
-    param('postcode').matches("^[A-Z]{1,2}[0-9]{1,2}[A-Z]?(\\s*[0-9][A-Z]{1,2})?$")],
+    param('number').notEmpty().isLength({ max:45 }).matches(sqlI),
+    param('street').notEmpty().isLength({ max:45 }).matches(sqlI),
+    param('townorcity').notEmpty().isLength({ max:45 }).matches(sqlI),
+    param('county').notEmpty().isLength({ max:45 }).matches(sqlI),
+    param('postcode').matches("^[A-Z]{1,2}[0-9]{1,2}[A-Z]?(\\s*[0-9][A-Z]{1,2})?$").matches(sqlI)],
     function(req, res, next) {
     /*
     Creates a new record in the Address Table
@@ -161,11 +161,11 @@ router.post('/insertAddress/:number/:street/:townorcity/:county/:postcode',[
 });
 
 router.get('/selectAddress/:number/:street/:townorcity/:county/:postcode',[
-    param('number').notEmpty(),
-    param('street').notEmpty(),
-    param('townorcity').notEmpty(),
-    param('county').notEmpty(),
-    param('postcode').matches("^[A-Z]{1,2}[0-9]{1,2}[A-Z]?(\\s*[0-9][A-Z]{1,2})?$")],
+    param('number').notEmpty().matches(sqlI),
+    param('street').notEmpty().matches(sqlI),
+    param('townorcity').notEmpty().matches(sqlI),
+    param('county').notEmpty().matches(sqlI),
+    param('postcode').matches("^[A-Z]{1,2}[0-9]{1,2}[A-Z]?(\\s*[0-9][A-Z]{1,2})?$").matches(sqlI)],
     function(req, res, next) {
     /*
     Reads addressID from the Address Table
@@ -182,14 +182,14 @@ router.get('/selectAddress/:number/:street/:townorcity/:county/:postcode',[
 });
 
 router.post('/insertUser/:username/:password/:salt/:firstname/:secondname/:email/:addressid/:secret',[
-    param('username').notEmpty().isLength({ max:45 }),
-    param('password').notEmpty().isLength({ max:128 }),
-    param('salt').notEmpty().isLength({ max:100 }),
-    param('firstname').notEmpty().isLength({ max:45 }),
-    param('secondname').notEmpty().isLength({ max:45 }),
-    param('email').matches("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$").isLength({ max:45 }),
-    param('addressid').matches("^[0-9]+$"),
-    param('secret').notEmpty().isLength({ max:255 })],
+    param('username').notEmpty().isLength({ max:45 }).matches(sqlI),
+    param('password').notEmpty().isLength({ max:128 }).matches(sqlI),
+    param('salt').notEmpty().isLength({ max:100 }).matches(sqlI),
+    param('firstname').notEmpty().isLength({ max:45 }).matches(sqlI),
+    param('secondname').notEmpty().isLength({ max:45 }).matches(sqlI),
+    param('email').matches("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$").isLength({ max:45 }).matches(sqlI),
+    param('addressid').matches("^[0-9]+$").matches(sqlI),
+    param('secret').notEmpty().isLength({ max:255 }).matches(sqlI)],
     function(req, res, next) {
     /*
     Creates a new record in the User Table
@@ -214,7 +214,7 @@ router.post('/insertUser/:username/:password/:salt/:firstname/:secondname/:email
 });
 
 router.get('/selectUsername/:username',[
-    param('username').notEmpty()],
+    param('username').notEmpty().matches(sqlI)],
     function(req, res, next) {
     /*
     Reads username from the User Table
@@ -230,7 +230,7 @@ router.get('/selectUsername/:username',[
 });
 
 router.get('/getUserAccounts/:username',[
-    param('username').notEmpty()],
+    param('username').notEmpty().matches(sqlI)],
     function(req, res, next) {
     /*
     Reads Name, Type, Balance, Currency, Username, AccNumber from Account Table
@@ -246,8 +246,8 @@ router.get('/getUserAccounts/:username',[
 });
 
 router.get('/getAccountNames/:username/:accountName',[
-    param('username').notEmpty(),
-    param('accountName').notEmpty()],
+    param('username').notEmpty().matches(sqlI),
+    param('accountName').notEmpty().matches(sqlI)],
     function(req, res, next) {
     /*
     Reads Name, Type, Balance, Currency, Username, AccNumber from Account Table
@@ -263,7 +263,7 @@ router.get('/getAccountNames/:username/:accountName',[
 });
 
 router.get('/getAccountNumbers/:accountNumber',[
-    param('accountNumber').isLength({ min: 8, max:8 })],
+    param('accountNumber').isLength({ min: 8, max:8 }).matches(sqlI)],
     function(req, res, next) {
     /*
     Reads Name, Type, Balance, Currency, Username, AccNumber from Account Table
@@ -279,12 +279,12 @@ router.get('/getAccountNumbers/:accountNumber',[
 });
 
 router.post('/insertAccount/:accountName/:type/:balance/:currency/:username/:accountNumber', [
-    param('accountName').notEmpty().isLength({ max:45 }),
-    param('type').notEmpty().isLength({ max:45 }),
-    param('balance').matches("^[0-9]+(\.[0-9]{1,2})?$"),
-    param('currency').matches("[£$€]").isLength({ max:45 }),
-    param('username').notEmpty().isLength({ max:45 }),
-    param('accountNumber').isLength({ min: 8, max:8 })],
+    param('accountName').notEmpty().isLength({ max:45 }).matches(sqlI),
+    param('type').notEmpty().isLength({ max:45 }).matches(sqlI),
+    param('balance').matches("^[0-9]+(\.[0-9]{1,2})?$").matches(sqlI),
+    param('currency').matches("[£$€]").isLength({ max:45 }).matches(sqlI),
+    param('username').notEmpty().isLength({ max:45 }).matches(sqlI),
+    param('accountNumber').isLength({ min: 8, max:8 }).matches(sqlI)],
     function(req, res, next) {
     /*
     Creates a new record in the Account Table
@@ -307,7 +307,7 @@ router.post('/insertAccount/:accountName/:type/:balance/:currency/:username/:acc
 });
 
 router.get('/getUserBalance/:accnumber', [
-    param('accnumber').isLength({ min: 8, max:8 })],
+    param('accnumber').isLength({ min: 8, max:8 }).matches(sqlI)],
     function(req, res, next) {
     /*
     Reads Balance and Currency from the Account Table
@@ -323,7 +323,7 @@ router.get('/getUserBalance/:accnumber', [
 });
 
 router.get('/getUserTransactions/:username',[
-    param('username').notEmpty()],
+    param('username').notEmpty().matches(sqlI)],
     function(req, res, next) {
     /*
     Reads TransactionId, Amount, DateTime, NameTo, AccNumberTo, AccNumberFrom, Reference and Tag from Transaction Table
@@ -339,13 +339,13 @@ router.get('/getUserTransactions/:username',[
 });
 
 router.post('/insertTransaction/:accFrom/:accNumber/:amount/:reference/:tag/:datetime/:accName',[
-    param('accFrom').isLength({ min: 8, max:8 }),
-    param('accNumber').isLength({ min: 8, max:8 }),
-    param('amount').matches("^[0-9]+(\.[0-9]{1,2})?$"),
-    param('reference').isLength({ max:20 }),
-    param('tag').isLength({ max:20 }),
-    param('datetime').matches("^([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})$"),
-    param('accName').notEmpty().isLength({ max:50 })],
+    param('accFrom').isLength({ min: 8, max:8 }).matches(sqlI),
+    param('accNumber').isLength({ min: 8, max:8 }).matches(sqlI),
+    param('amount').matches("^[0-9]+(\.[0-9]{1,2})?$").matches(sqlI),
+    param('reference').isLength({ max:20 }).matches(sqlI),
+    param('tag').isLength({ max:20 }).matches(sqlI),
+    param('datetime').matches("^([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})$").matches(sqlI),
+    param('accName').notEmpty().isLength({ max:50 }).matches(sqlI)],
     function(req, res, next) {
     /*
     Creates a new record in the Transaction Table
@@ -369,13 +369,13 @@ router.post('/insertTransaction/:accFrom/:accNumber/:amount/:reference/:tag/:dat
 });
 
 router.post('/insertFutureTransaction/:accFrom/:accNumber/:amount/:reference/:tag/:datetime/:accName',[
-    param('accFrom').isLength({ min: 8, max:8 }),
-    param('accNumber').isLength({ min: 8, max:8 }),
-    param('amount').matches("^[0-9]+(\.[0-9]{1,2})?$"),
-    param('reference').isLength({ max:20 }),
-    param('tag').isLength({ max:20 }),
-    param('datetime').matches("^([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})$"),
-    param('accName').notEmpty().isLength({ max:50 })],
+    param('accFrom').isLength({ min: 8, max:8 }).matches(sqlI),
+    param('accNumber').isLength({ min: 8, max:8 }).matches(sqlI),
+    param('amount').matches("^[0-9]+(\.[0-9]{1,2})?$").matches(sqlI),
+    param('reference').isLength({ max:20 }).matches(sqlI),
+    param('tag').isLength({ max:20 }).matches(sqlI),
+    param('datetime').matches("^([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})$").matches(sqlI),
+    param('accName').notEmpty().isLength({ max:50 }).matches(sqlI)],
     function(req, res, next) {
     /*
     Creates a new record in the FutureTransaction Table
@@ -399,9 +399,9 @@ router.post('/insertFutureTransaction/:accFrom/:accNumber/:amount/:reference/:ta
 });
 
 router.post('/setFavouritePayees/:username/:accName/:accNumber',[
-    param('username').notEmpty().isLength({ max:45 }),
-    param('accName').notEmpty().isLength({ max:45 }),
-    param('accNumber').isLength({ min: 8, max:8 })],
+    param('username').notEmpty().isLength({ max:45 }).matches(sqlI),
+    param('accName').notEmpty().isLength({ max:45 }).matches(sqlI),
+    param('accNumber').isLength({ min: 8, max:8 }).matches(sqlI)],
     function(req, res, next){
     /*
     Creates a new record in the Favourites Table
@@ -421,7 +421,7 @@ router.post('/setFavouritePayees/:username/:accName/:accNumber',[
 });
 
 router.get('/getFavouritePayees/:username', [
-    param('username').notEmpty()],
+    param('username').notEmpty().matches(sqlI)],
     function(req, res, next) {
     /*
     Reads Name and AccNumber from Favourites Table
@@ -437,7 +437,7 @@ router.get('/getFavouritePayees/:username', [
 });
 
 router.get('/getAccountPayees/:accFrom', [
-    param('accFrom').isLength({ min: 8, max:8 })],
+    param('accFrom').isLength({ min: 8, max:8 }).matches(sqlI)],
     function(req, res, next) {
     /*
     Reads AccNumberTo and NameTo from Transaction Table
@@ -453,8 +453,8 @@ router.get('/getAccountPayees/:accFrom', [
 });
 
 router.post('/updateAccountBalance/:accNumber/:amount', [
-    param('accNumber').isLength({ min: 8, max:8 }),
-    param('amount').matches("^[-+]?[0-9]+(\.[0-9]{1,2})?$")],
+    param('accNumber').isLength({ min: 8, max:8 }).matches(sqlI),
+    param('amount').matches("^[-+]?[0-9]+(\.[0-9]{1,2})?$").matches(sqlI)],
     function(req, res, next) {
     /*
     Updates Balance in Account by amount parameter
@@ -470,8 +470,8 @@ router.post('/updateAccountBalance/:accNumber/:amount', [
 });
 
 router.post('/setTag/:username/:tagName', [
-    param('username').notEmpty().isLength({ max:45 }),
-    param('tagName').notEmpty().isLength({ max:50 })],
+    param('username').notEmpty().isLength({ max:45 }).matches(sqlI),
+    param('tagName').notEmpty().isLength({ max:50 }).matches(sqlI)],
     function(req, res, next){
     /*
       Creates a new record in the Tags Table
@@ -490,7 +490,7 @@ router.post('/setTag/:username/:tagName', [
 });
 
 router.get('/getTag/:username',[
-    param('username').notEmpty()],
+    param('username').notEmpty().matches(sqlI)],
     function(req, res, next) {
     /*
       Reads Tag from Tags Table
@@ -506,8 +506,8 @@ router.get('/getTag/:username',[
 });
 
 router.post('/deleteTag/:username/:tagName',[
-    param('username').notEmpty(),
-    param('tagName').notEmpty()],
+    param('username').notEmpty().matches(sqlI),
+    param('tagName').notEmpty().matches(sqlI)],
     function(req, res, next){
     /*
       Deletes a record from Tags Table
