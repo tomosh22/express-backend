@@ -135,10 +135,10 @@ router.get('/selectHashAndSaltAndSecret/:username',[
 });
 
 router.post('/insertAddress/:number/:street/:townorcity/:county/:postcode',[
-    param('number').notEmpty(),
-    param('street').notEmpty(),
-    param('townorcity').notEmpty(),
-    param('county').notEmpty(),
+    param('number').notEmpty().isLength({ max:45 }),
+    param('street').notEmpty().isLength({ max:45 }),
+    param('townorcity').notEmpty().isLength({ max:45 }),
+    param('county').notEmpty().isLength({ max:45 }),
     param('postcode').matches("^[A-Z]{1,2}[0-9]{1,2}[A-Z]?(\\s*[0-9][A-Z]{1,2})?$")],
     function(req, res, next) {
     /*
@@ -182,13 +182,14 @@ router.get('/selectAddress/:number/:street/:townorcity/:county/:postcode',[
 });
 
 router.post('/insertUser/:username/:password/:salt/:firstname/:secondname/:email/:addressid/:secret',[
-    param('username').notEmpty(),
-    param('password').notEmpty(),
-    param('salt').notEmpty(),
-    param('firstname').notEmpty(),
-    param('secondname').notEmpty(),
-    param('email').matches("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"),
-    param('addressid').matches("^[0-9]+$")],
+    param('username').notEmpty().isLength({ max:45 }),
+    param('password').notEmpty().isLength({ max:128 }),
+    param('salt').notEmpty().isLength({ max:100 }),
+    param('firstname').notEmpty().isLength({ max:45 }),
+    param('secondname').notEmpty().isLength({ max:45 }),
+    param('email').matches("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$").isLength({ max:45 }),
+    param('addressid').matches("^[0-9]+$"),
+    param('secret').notEmpty().isLength({ max:255 })],
     function(req, res, next) {
     /*
     Creates a new record in the User Table
@@ -278,11 +279,11 @@ router.get('/getAccountNumbers/:accountNumber',[
 });
 
 router.post('/insertAccount/:accountName/:type/:balance/:currency/:username/:accountNumber', [
-    param('accountName').notEmpty(),
-    param('type').notEmpty(),
+    param('accountName').notEmpty().isLength({ max:45 }),
+    param('type').notEmpty().isLength({ max:45 }),
     param('balance').matches("^[0-9]+(\.[0-9]{1,2})?$"),
-    param('currency').matches("[£$€]"),
-    param('username').notEmpty(),
+    param('currency').matches("[£$€]").isLength({ max:45 }),
+    param('username').notEmpty().isLength({ max:45 }),
     param('accountNumber').isLength({ min: 8, max:8 })],
     function(req, res, next) {
     /*
@@ -341,8 +342,10 @@ router.post('/insertTransaction/:accFrom/:accNumber/:amount/:reference/:tag/:dat
     param('accFrom').isLength({ min: 8, max:8 }),
     param('accNumber').isLength({ min: 8, max:8 }),
     param('amount').matches("^[0-9]+(\.[0-9]{1,2})?$"),
+    param('reference').isLength({ max:20 }),
+    param('tag').isLength({ max:20 }),
     param('datetime').matches("^([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})$"),
-    param('accName').notEmpty()],
+    param('accName').notEmpty().isLength({ max:50 })],
     function(req, res, next) {
     /*
     Creates a new record in the Transaction Table
@@ -369,8 +372,10 @@ router.post('/insertFutureTransaction/:accFrom/:accNumber/:amount/:reference/:ta
     param('accFrom').isLength({ min: 8, max:8 }),
     param('accNumber').isLength({ min: 8, max:8 }),
     param('amount').matches("^[0-9]+(\.[0-9]{1,2})?$"),
+    param('reference').isLength({ max:20 }),
+    param('tag').isLength({ max:20 }),
     param('datetime').matches("^([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})$"),
-    param('accName').notEmpty()],
+    param('accName').notEmpty().isLength({ max:50 })],
     function(req, res, next) {
     /*
     Creates a new record in the FutureTransaction Table
@@ -394,8 +399,8 @@ router.post('/insertFutureTransaction/:accFrom/:accNumber/:amount/:reference/:ta
 });
 
 router.post('/setFavouritePayees/:username/:accName/:accNumber',[
-    param('username').notEmpty(),
-    param('accName').notEmpty(),
+    param('username').notEmpty().isLength({ max:45 }),
+    param('accName').notEmpty().isLength({ max:45 }),
     param('accNumber').isLength({ min: 8, max:8 })],
     function(req, res, next){
     /*
@@ -465,8 +470,8 @@ router.post('/updateAccountBalance/:accNumber/:amount', [
 });
 
 router.post('/setTag/:username/:tagName', [
-    param('username').notEmpty(),
-    param('tagName').notEmpty()],
+    param('username').notEmpty().isLength({ max:45 }),
+    param('tagName').notEmpty().isLength({ max:50 })],
     function(req, res, next){
     /*
       Creates a new record in the Tags Table
