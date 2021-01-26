@@ -181,7 +181,7 @@ router.get('/selectAddress/:number/:street/:townorcity/:county/:postcode',[
     }
 });
 
-router.post('/insertUser/:username/:password/:salt/:firstname/:secondname/:email/:addressid',[
+router.post('/insertUser/:username/:password/:salt/:firstname/:secondname/:email/:addressid/:secret',[
     param('username').notEmpty(),
     param('password').notEmpty(),
     param('salt').notEmpty(),
@@ -196,7 +196,7 @@ router.post('/insertUser/:username/:password/:salt/:firstname/:secondname/:email
     const errors=validationResult(req);
     if (errors.isEmpty()) {
       p = req.params;
-      query = "INSERT INTO User (Username,Password,Salt,Firstname,SecondName,Email,AddressId) " +
+      query = "INSERT INTO User (Username,Password,Salt,Firstname,SecondName,Email,AddressId,Secret) " +
           "VALUES(" +
           "\'" + p.username + "\'," +
           "\'" + p.password + "\'," +
@@ -205,6 +205,7 @@ router.post('/insertUser/:username/:password/:salt/:firstname/:secondname/:email
           "\'" + p.secondname + "\'," +
           "\'" + p.email + "\'," +
           +p.addressid +
+          "\'" + p.secret + "\'" +
           ");";
       console.log(query);
       doPost(query, res);
