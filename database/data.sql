@@ -2,7 +2,7 @@ CREATE TABLE Address
 (
     AddressId int NOT NULL AUTO_INCREMENT,
     Number varchar(45) NOT NULL ,
-     Street varchar(45) NOT NULL ,
+    Street varchar(45) NOT NULL ,
     TownOrCity varchar(45) NOT NULL ,
     County varchar(45) NOT NULL ,
     Postcode varchar(45) NOT NULL ,
