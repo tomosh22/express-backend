@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var { param, validationResult }= require('express-validator');
+var nodemailer = require('nodemailer');
+var cors = require('cors');
 var mysql = require("mysql");
 var config = {
   user:"user",
@@ -11,6 +13,55 @@ var config = {
   //schema:"stubank",
   insecureAuth : true
 }
+var transport = {
+  host: 'smtp.office365.com',
+  port: 587,
+  auth: {
+    user: "stuteam15@outlook.com",
+    pass: "ak7xI8l9@&AG"
+  }
+}
+var transporter = nodemailer.createTransport(transport)
+transporter.verify((error, success) => {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Server is ready to take messages');
+  }
+});
+
+router.post('/send', (req, res, next) => {
+  var name = req.body.name
+  var email = req.body.email
+  var message = req.body.message
+  var content = `name: ${name} \n email: ${email} \n message: ${message} `
+
+  var mail = {
+    from: name,
+    to: 'stuteam15@outlook.com',
+    subject: 'New Message from StuBank Contact Form',
+    text: content
+  }
+
+  transporter.sendMail(mail, (err, data) => {
+    if (err) {
+      res.json({
+        status: 'fail'
+      })
+    } else {
+      res.json({
+        status: 'success'
+      })
+    }
+  })
+})
+
+const app = express()
+app.use(cors())
+app.use(express.json())
+app.use('/', router)
+app.listen(3002)
+
 function doGet(sql,res)
 {
   var con = mysql.createConnection(config);
