@@ -32,6 +32,7 @@ CREATE TABLE Account
     Currency varchar(45) NOT NULL ,
     Username varchar(45) NOT NULL ,
     AccNumber char(8) NOT NULL ,
+    Secret varchar(255) NOT NULL,
 
     PRIMARY KEY (AccNumber),
     FOREIGN KEY (Username) REFERENCES User(Username)
