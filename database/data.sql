@@ -19,6 +19,7 @@ CREATE TABLE User
     SecondName varchar(45) NOT NULL ,
     Email varchar(45) NOT NULL ,
     AddressId int NOT NULL ,
+    Secret varchar(255) NOT NULL,
 
     PRIMARY KEY (Username),
     FOREIGN KEY (AddressId) REFERENCES Address(AddressId)
@@ -32,7 +33,6 @@ CREATE TABLE Account
     Currency varchar(45) NOT NULL ,
     Username varchar(45) NOT NULL ,
     AccNumber char(8) NOT NULL ,
-    Secret varchar(255) NOT NULL,
 
     PRIMARY KEY (AccNumber),
     FOREIGN KEY (Username) REFERENCES User(Username)
