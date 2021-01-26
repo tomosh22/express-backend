@@ -289,7 +289,7 @@ router.post('/insertTransaction/:accFrom/:accNumber/:amount/:reference/:tag/:dat
     param('accFrom').isLength({ min: 8, max:8 }),
     param('accNumber').isLength({ min: 8, max:8 }),
     param('amount').matches("^[0-9]+(\.[0-9]{1,2})?$"),
-    param('datetime').notEmpty(),
+    param('datetime').matches("^([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})$"),
     param('accName').notEmpty()],
     function(req, res, next) {
     /*
@@ -317,7 +317,7 @@ router.post('/insertFutureTransaction/:accFrom/:accNumber/:amount/:reference/:ta
     param('accFrom').isLength({ min: 8, max:8 }),
     param('accNumber').isLength({ min: 8, max:8 }),
     param('amount').matches("^[0-9]+(\.[0-9]{1,2})?$"),
-    param('datetime').notEmpty(),
+    param('datetime').matches("^([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})$"),
     param('accName').notEmpty()],
     function(req, res, next) {
     /*
