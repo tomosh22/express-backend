@@ -205,7 +205,7 @@ router.post('/insertUser/:username/:password/:salt/:firstname/:secondname/:email
           "\'" + p.secondname + "\'," +
           "\'" + p.email + "\'," +
           +p.addressid +
-          "\'," + p.secret + "\'" +
+          ",\'" + p.secret + "\'" +
           ");";
       console.log(query);
       doPost(query, res);
