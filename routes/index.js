@@ -119,7 +119,7 @@ router.get('/selectLoginUser/:username',[
     }
 });
 
-router.get('/selectHashAndSalt/:username',[
+router.get('/selectHashAndSaltAndSecret/:username',[
     param('username').notEmpty()],
     function(req, res, next) {
     /*
@@ -129,7 +129,7 @@ router.get('/selectHashAndSalt/:username',[
     const errors=validationResult(req);
     if (errors.isEmpty()) {
       p = req.params;
-      query = "SELECT Password,Salt FROM User WHERE Username = " + "\'" + p.username + "\'";
+      query = "SELECT Password,Salt,Secret FROM User WHERE Username = " + "\'" + p.username + "\'";
       doGet(query, res);
     }
 });
