@@ -1,129 +1,112 @@
 CREATE TABLE Address
 (
-    AddressId  int         NOT NULL AUTO_INCREMENT,
-    Number     varchar(45) NOT NULL,
-    Street     varchar(45) NOT NULL,
-    TownOrCity varchar(45) NOT NULL,
-    County     varchar(45) NOT NULL,
-    Postcode   varchar(45) NOT NULL,
+    AddressId int NOT NULL AUTO_INCREMENT,
+    Number varchar(45) NOT NULL ,
+    Street varchar(45) NOT NULL ,
+    TownOrCity varchar(45) NOT NULL ,
+    County varchar(45) NOT NULL ,
+    Postcode varchar(45) NOT NULL ,
 
     PRIMARY KEY (AddressId)
 );
 
 CREATE TABLE User
 (
-    Username   varchar(45)  NOT NULL,
-    Password   varchar(128) NOT NULL,
-    Salt       char(16)     NOT NULL,
-    FirstName  varchar(45)  NOT NULL,
-    SecondName varchar(45)  NOT NULL,
-    Email      varchar(45)  NOT NULL,
-    AddressId  int          NOT NULL,
-    Secret     varchar(255) NOT NULL,
+    Username varchar(45) NOT NULL ,
+    Password varchar(128) NOT NULL ,
+    Salt char(16) NOT NULL ,
+    FirstName varchar(45) NOT NULL ,
+    SecondName varchar(45) NOT NULL ,
+    Email varchar(45) NOT NULL ,
+    AddressId int NOT NULL ,
+    Secret varchar(255) NOT NULL,
 
     PRIMARY KEY (Username),
-    FOREIGN KEY (AddressId) REFERENCES Address (AddressId)
+    FOREIGN KEY (AddressId) REFERENCES Address(AddressId)
 );
 
 CREATE TABLE Account
 (
-    Name      varchar(45)    NOT NULL,
-    Type      varchar(45)    NOT NULL,
-    Balance   decimal(65, 2) NOT NULL,
-    Currency  varchar(45)    NOT NULL,
-    Username  varchar(45)    NOT NULL,
-    AccNumber char(8)        NOT NULL,
+    Name varchar(45) NOT NULL ,
+    Type varchar(45) NOT NULL ,
+    Balance decimal(65,2) NOT NULL ,
+    Currency varchar(45) NOT NULL ,
+    Username varchar(45) NOT NULL ,
+    AccNumber char(8) NOT NULL ,
 
     PRIMARY KEY (AccNumber),
-    FOREIGN KEY (Username) REFERENCES User (Username)
+    FOREIGN KEY (Username) REFERENCES User(Username)
 );
 
 CREATE TABLE Favourites
 (
-    FavouriteId int         NOT NULL AUTO_INCREMENT,
-    Username    varchar(45) NOT NULL,
-    Name        varchar(45) NOT NULL,
-    AccNumber   char(8)     NOT NULL,
+    FavouriteId int NOT NULL AUTO_INCREMENT,
+    Username varchar(45) NOT NULL ,
+    Name varchar(45) NOT NULL ,
+    AccNumber char(8) NOT NULL ,
 
     PRIMARY KEY (FavouriteId),
-    FOREIGN KEY (Username) REFERENCES User (Username)
+    FOREIGN KEY (Username) REFERENCES User(Username)
 );
 
 CREATE TABLE Tags
 (
-    TagId    int         NOT NULL AUTO_INCREMENT,
-    Username varchar(45) NOT NULL,
-    Tag      varchar(50) NOT NULL,
+    TagId int NOT NULL AUTO_INCREMENT,
+    Username varchar(45) NOT NULL ,
+    Tag varchar(50) NOT NULL,
 
     PRIMARY KEY (TagId),
-    FOREIGN KEY (Username) REFERENCES User (Username)
+    FOREIGN KEY (Username) REFERENCES User(Username)
 );
 
 CREATE TABLE Transaction
 (
-    TransactionId int            NOT NULL AUTO_INCREMENT,
-    Amount        decimal(65, 2) NOT NULL,
-    DateTime      datetime       NOT NULL,
-    NameTo        varchar(50)    NOT NULL,
-    AccNumberTo   varchar(45)    NOT NULL,
-    AccNumberFrom varchar(45)    NOT NULL,
-    Reference     varchar(20),
-    Tag           varchar(20),
+    TransactionId int NOT NULL AUTO_INCREMENT,
+    Amount decimal(65,2) NOT NULL ,
+    DateTime datetime NOT NULL ,
+    NameTo varchar(50) NOT NULL,
+    AccNumberTo varchar(45) NOT NULL ,
+    AccNumberFrom varchar(45) NOT NULL ,
+    Reference varchar(20),
+    Tag varchar(20),
 
     PRIMARY KEY (TransactionId),
-    FOREIGN KEY (AccNumberTo) REFERENCES Account (AccNumber),
-    FOREIGN KEY (AccNumberFrom) REFERENCES Account (AccNumber)
+    FOREIGN KEY (AccNumberTo) REFERENCES Account(AccNumber),
+    FOREIGN KEY (AccNumberFrom) REFERENCES Account(AccNumber)
 );
 
 CREATE TABLE FutureTransaction
 (
-    FutureTransactionId int            NOT NULL AUTO_INCREMENT,
-    Amount              decimal(65, 2) NOT NULL,
-    DateTime            datetime       NOT NULL,
-    NameTo              varchar(50)    NOT NULL,
-    AccNumberTo         varchar(45)    NOT NULL,
-    AccNumberFrom       varchar(45)    NOT NULL,
-    Reference           varchar(20),
-    Tag                 varchar(20),
+    FutureTransactionId int NOT NULL AUTO_INCREMENT,
+    Amount decimal(65,2) NOT NULL ,
+    DateTime datetime NOT NULL ,
+    NameTo varchar(50) NOT NULL,
+    AccNumberTo varchar(45) NOT NULL ,
+    AccNumberFrom varchar(45) NOT NULL ,
+    Reference varchar(20),
+    Tag varchar(20),
 
     PRIMARY KEY (FutureTransactionId),
-    FOREIGN KEY (AccNumberTo) REFERENCES Account (AccNumber),
-    FOREIGN KEY (AccNumberFrom) REFERENCES Account (AccNumber)
+    FOREIGN KEY (AccNumberTo) REFERENCES Account(AccNumber),
+    FOREIGN KEY (AccNumberFrom) REFERENCES Account(AccNumber)
 );
 
 
 
-INSERT INTO Address
-VALUES (1, 1, "Some Str eet", "Some Town", "Some County", "Some Postcode");
-INSERT INTO Address
-VALUES (2, 1, "Another Street", "Another Town", "Another County", "Another Postcode");
-INSERT INTO Address
-VALUES (3, 1, "Street", "Town", "Country", "Postcode");
-INSERT INTO User
-VALUES ("joeb", "password", "saltsaltsaltsalt", "Joe", "Bloggs", "joeb@gmail.com", 1);
-INSERT INTO User
-VALUES ("bobg", "password", "saltsaltsaltsalt", "Bob", "Green", "bobg@gmail.com", 2);
-INSERT INTO User
-VALUES ("franks", "password", "saltsaltsaltsalt", "Frank", "Smith", "franks@gmail.com", 3);
-INSERT INTO Account
-VALUES ("Joe's current account", "current", 100, "£", "joeb", "11111111");
-INSERT INTO Account
-VALUES ("Bob's current account", "current", 350, "£", "bobg", "22222222");
-INSERT INTO Account
-VALUES ("Bob's savings account", "savings", 50, "£", "bobg", "33333333");
-INSERT INTO Account
-VALUES ("Frank's current account", "current", 75, "£", "franks", "44444444");
-INSERT INTO Transaction
-VALUES (1, 10, "2020-12-02 12:51:00", "bob", "22222222", "11111111", "Pizza night", "Eating Out");
-INSERT INTO Transaction
-VALUES (2, 20, "2020-12-02 13:00:00", "bob", "22222222", "11111111", "Car ride", "Transport");
-INSERT INTO Transaction
-VALUES (3, 10, "2020-12-01 12:00:00", "bob", "22222222", "11111111", "Cinema", "Entertainment");
-INSERT INTO Transaction
-VALUES (4, 10, "2020-12-01 14:00:00", "joe", "11111111", "22222222", "Food", "Eating Out");
-INSERT INTO Transaction
-VALUES (5, 10, "2020-12-01 14:00:00", "frank", "44444444", "22222222", "Mini Golf", "Entertainment");
-INSERT INTO Favourites
-VALUES (1, "bobg", "Joe", "11111111");
-INSERT INTO Favourites
-VALUES (2, "bobg", "Frank", "44444444");
+INSERT INTO Address VALUES (1,1,"Some Street","Some Town","Some County","Some Postcode");
+INSERT INTO Address VALUES (2,1,"Another Street","Another Town","Another County","Another Postcode");
+INSERT INTO Address VALUES (3,1,"Street","Town","Country","Postcode");
+INSERT INTO User VALUES ("joeb","password","saltsaltsaltsalt","Joe","Bloggs","joeb@gmail.com",1);
+INSERT INTO User VALUES("bobg","password","saltsaltsaltsalt","Bob","Green","bobg@gmail.com",2);
+INSERT INTO User VALUES ("franks","password","saltsaltsaltsalt","Frank", "Smith","franks@gmail.com",3);
+INSERT INTO Account VALUES("Joe's current account","current",100,"£","joeb","11111111");
+INSERT INTO Account VALUES("Bob's current account","current",350,"£","bobg","22222222");
+INSERT INTO Account VALUES("Bob's savings account", "savings", 50, "£", "bobg", "33333333");
+INSERT INTO Account VALUES("Frank's current account","current",75,"£","franks","44444444");
+INSERT INTO Transaction VALUES(1,10,"2020-12-02 12:51:00","bob","22222222","11111111","Pizza night","Eating Out");
+INSERT INTO Transaction VALUES(2,20,"2020-12-02 13:00:00","bob","22222222","11111111","Car ride","Transport");
+INSERT INTO Transaction VALUES(3,10,"2020-12-01 12:00:00","bob","22222222","11111111","Cinema","Entertainment");
+INSERT INTO Transaction VALUES(4,10,"2020-12-01 14:00:00","joe","11111111","22222222","Food","Eating Out");
+INSERT INTO Transaction VALUES(5,10,"2020-12-01 14:00:00","frank","44444444","22222222","Mini Golf","Entertainment");
+INSERT INTO Favourites VALUES(1, "bobg", "Joe", "11111111");
+INSERT INTO Favourites VALUES(2, "bobg", "Frank", "44444444");
