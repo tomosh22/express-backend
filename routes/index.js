@@ -406,7 +406,7 @@ router.post('/insertFutureTransaction/:accFrom/:accNumber/:amount/:reference/:ta
         }
     });
 
-router.post('/setFavouritePayees/:username/:accName/:accNumber', [
+router.post('/insertFavouritePayees/:username/:accName/:accNumber', [
         param('username').notEmpty().isLength({max: 45}).matches(sqlI),
         param('accName').notEmpty().isLength({max: 45}).matches(sqlI),
         param('accNumber').isLength({min: 8, max: 8}).matches(sqlI)],
@@ -477,7 +477,7 @@ router.post('/updateAccountBalance/:accNumber/:amount', [
         }
     });
 
-router.post('/setTag/:username/:tagName', [
+router.post('/insertTag/:username/:tagName', [
         param('username').notEmpty().isLength({max: 45}).matches(sqlI),
         param('tagName').notEmpty().isLength({max: 50}).matches(sqlI)],
     function (req, res, next) {
