@@ -18,5 +18,7 @@ StuBank is a web app for student banking, built using React, Express and Node.
 
 The app is now fully running and ready to go.
 
+To try it on mobile, navigate to the IP that is provided in the terminal after running `yarn start`. Alternatively, use browser dev tools to simulate a mobile device with device mode.
+
 ## Usage
 The web app allows you to create a StuBank account, sign in, create accounts and move money. For more information, view the FAQ page on the web app.
