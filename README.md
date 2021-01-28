@@ -1,25 +1,22 @@
-#Express backend
+# StuBank
 
-### Set up
+StuBank is a web app for student banking, built using React, Express and Node.
 
-* Clone *Express app* from nucode.
-* Run *Docker* on your machine and run command `npm run dockerStart`.
-* Go to the **"Edit Run/Debug configurations dialog"** on the top right of the IntelliJ and run `bin/www` OR use `npm run start`.
+## Installation
 
----
+1. Unzip the source code.
+2. Install [npm](https://www.npmjs.com/).
+3. Install [yarn](https://classic.yarnpkg.com/en/docs/install/).
+4. Open a terminal in the folder location.
+5. Run `yarn install` in `react-app` to install all of the needed dependencies.
+6. Run `npm install` in `express-backend` to install all of the needed dependencies.
+7. Navigate to `express-backend/database`, run `docker build -t stubank .` to build the docker image for the database (ensure you don't forget the `.` at the end of the command.
+8. Run `npm run dockerStart` in the same location to run the docker image.
+9. *If running on Mac, change line 26 of `react-app/package.json` to `"start": "PORT=3001 react-scripts start",`*
+10. Run `yarn start` in `react-app`. If it does not automatically launch, navigate to [http://localhost:3001/](http://localhost:3001/) and move onto the next step.
+11. Run `npm start` in `express-backend`. Verify the server is running by checking for “Server is ready to take messages” in terminal.
 
+The app is now fully running and ready to go.
 
-This express application will handle the HTTP requests
-necessary for our react application to interact with our
-database running in docker
-
-The docker db must be running on port 33333 and must
-be started with the argument
---default-authentication-plugin=mysql_native_password
-
-To test a HTTP GET go to http://localhost:3000/selectLoginUser/bobg
-in a browser
-
-To test a HTTP post execute this command in the command line:
-
-curl --data '' post http://localhost:3000/insertAddressQuery/line1test/line2/test/postcodetest
+## Usage
+The web app allows you to create a StuBank account, sign in, create accounts and move money. For more information, view the FAQ page on the web app.
