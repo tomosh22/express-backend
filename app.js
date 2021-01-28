@@ -120,6 +120,8 @@ setInterval(()=>{
 						let currencyTo = null
 						con.query("SELECT Currency FROM Account WHERE AccNumber = " + "\'" + x.AccNumberFrom + "\';" +
 							"SELECT Currency FROM Account WHERE AccNumber = " + "\'" + x.AccNumberTo + "\'",(error,result) => {
+							if (error) throw error;
+							console.log(result)
 							currencyFrom = result[0][0].Currency
 							currencyTo = result[1][0].Currency
 
@@ -143,10 +145,12 @@ setInterval(()=>{
 					}
 
 				}
+				con.end()
 			})
-			con.end()
+
 		}
 
 	)
 
-},3600000)
+
+},1000)
