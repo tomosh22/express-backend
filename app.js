@@ -114,8 +114,6 @@ setInterval(()=>{
 			con.query(getFutureTranscationsQuery,(error,result) =>{
 				if(error) throw error;
 				for(var x of result) {
-					console.log("Time until transaction " + x.FutureTransactionId + ": ",
-						new Date(x.DateTime).getTime() - new Date().getTime())
 					if (new Date(x.DateTime).getTime() - new Date().getTime() < 0) {
 
 						let currencyFrom = null
@@ -140,11 +138,15 @@ setInterval(()=>{
 							const dateString = new Date(x.DateTime).toISOString().slice(0,19).replace("T", " ")
 							con.query(insertTransacationQuery(x.Amount,dateString,x.NameTo,x.AccNumberTo,x.AccNumberFrom,x.Reference,x.Tag))
 							con.query("DELETE FROM FutureTransaction WHERE FutureTransactionId = " + x.FutureTransactionId)
-							con.end()
+
 						})
 					}
+
 				}
 			})
+			con.end()
 		}
+
 	)
-},1000)
+
+},3600000)
