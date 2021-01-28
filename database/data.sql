@@ -14,7 +14,7 @@ CREATE TABLE User
 (
     Username varchar(45) NOT NULL ,
     Password varchar(128) NOT NULL ,
-    Salt char(16) NOT NULL ,
+    Salt char(100) NOT NULL ,
     FirstName varchar(45) NOT NULL ,
     SecondName varchar(45) NOT NULL ,
     Email varchar(45) NOT NULL ,
@@ -23,6 +23,16 @@ CREATE TABLE User
 
     PRIMARY KEY (Username),
     FOREIGN KEY (AddressId) REFERENCES Address(AddressId)
+);
+
+CREATE TABLE Admin
+(
+    AdminName varchar(45) NOT NULL ,
+    Password varchar(128) NOT NULL ,
+    Salt char(100) NOT NULL ,
+    Email varchar(45) NOT NULL ,
+
+    PRIMARY KEY (AdminName)
 );
 
 CREATE TABLE Account
