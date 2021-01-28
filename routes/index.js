@@ -530,4 +530,97 @@ router.post('/deleteTag/:username/:tagName', [
         }
     });
 
+router.post('/getTransactionCount',
+    function (req, res, next) {
+        /*
+        Returns the number of rows in the Transaction Table
+         */
+        query = "SELECT COUNT(*) FROM Transaction";
+        console.log(query);
+        doPost(query, res);
+});
+
+router.post('/getUserCount',
+    function (req,res,next){
+        /*
+        Returns the number of rows in the User Table
+         */
+        query = "SELECT COUNT(*) FROM User";
+        console.log(query);
+        doPost(query, res);
+});
+
+router.post('/insertAdmin/:adminName/:password/:salt/:email', [
+        param('adminName').notEmpty().isLength({max: 45}).matches(sqlI),
+        param('password').notEmpty().isLength({max: 128}).matches(sqlI),
+        param('salt').notEmpty().isLength({max: 100}).matches(sqlI),
+        param('email').matches("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$").isLength({max: 45}).matches(sqlI)],
+    function (req, res, next) {
+        /*
+        Creates a new record in the Admin Table
+        */
+        const errors = validationResult(req);
+        if (errors.isEmpty()) {
+            p = req.params;
+            query = "INSERT INTO Admin (AdminName,Password,Salt,Email) " +
+                "VALUES(" +
+                "\'" + p.adminName + "\'," +
+                "\'" + p.password + "\'," +
+                "\'" + p.salt + "\'," +
+                "\'" + p.email + "\'" +
+                ");";
+            console.log(query);
+            doPost(query, res);
+        }
+    });
+
+router.get('/getAdminHashAndSalt/:adminName', [
+        param('adminName').notEmpty().matches(sqlI)],
+    function (req, res, next) {
+        /*
+        Reads Salt,Hash from Admin Table
+        where AdminName matches adminName parameter
+        */
+        const errors = validationResult(req);
+        if (errors.isEmpty()) {
+            p = req.params;
+            query = "SELECT Password,Salt FROM Admin WHERE AdminName = " + "\'" + p.adminName + "\'";
+            console.log(query);
+            doGet(query, res);
+        }
+    });
+
+router.get('/getAllUsers',
+    function (req, res, next) {
+        /*
+        Reads Username,First Name,Second Name and email from User Table
+        for all users
+        */
+        const errors = validationResult(req);
+        if (errors.isEmpty()) {
+            p = req.params;
+            query = "SELECT Username,FirstName,SecondName,Email FROM User";
+            console.log(query);
+            doGet(query, res);
+        }
+    });
+
+router.get('/getUserInformation/:username', [
+        param('username').notEmpty().matches(sqlI)],
+    function (req, res, next) {
+        /*
+        Reads Username, Password, Salt, FirstName, SecondName, Email, AddressId, Secret from User Table
+        where Username matches username parameter
+        */
+        const errors = validationResult(req);
+        if (errors.isEmpty()) {
+            p = req.params;
+            query = "SELECT * FROM User WHERE Username = " + "\'" + p.username + "\'";
+            console.log(query);
+            doGet(query, res);
+        }
+    });
+
+
+
 module.exports = router;
