@@ -120,3 +120,4 @@ INSERT INTO Transaction VALUES(4,10,"2020-12-01 14:00:00","joe","11111111","2222
 INSERT INTO Transaction VALUES(5,10,"2020-12-01 14:00:00","frank","44444444","22222222","Mini Golf","Entertainment");
 INSERT INTO Favourites VALUES(1, "bobg", "Joe", "11111111");
 INSERT INTO Favourites VALUES(2, "bobg", "Frank", "44444444");
+INSERT INTO Admin VALUES ("admin", "7f7016b4dc620a7aa1b215a82b05f3e64e8c9446c4068f41f350e04c9b69852c984753db35478bf05baed6e3832b46e94666e5ba59e2a0b59c865d611a1bd5b9", "��0�U����o1W�O{�", "admin@admin.com")
