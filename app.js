@@ -121,12 +121,12 @@ setInterval(()=>{
 						con.query("SELECT Currency FROM Account WHERE AccNumber = " + "\'" + x.AccNumberFrom + "\';" +
 							"SELECT Currency FROM Account WHERE AccNumber = " + "\'" + x.AccNumberTo + "\'",(error,result) => {
 							if (error) throw error;
-							console.log(result)
+
 							currencyFrom = result[0][0].Currency
 							currencyTo = result[1][0].Currency
 
 
-							console.log(currencyFrom,currencyTo)
+							
 							let amount = null
 							if(currencyFrom !== currencyTo){
 								amount = currencyConverter(currencyFrom,currencyTo,x.Amount)
