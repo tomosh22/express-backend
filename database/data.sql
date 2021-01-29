@@ -104,19 +104,21 @@ CREATE TABLE FutureTransaction
 
 
 INSERT INTO Address VALUES (1,1,"Some Street","Some Town","Some County","Some Postcode");
-INSERT INTO Address VALUES (2,1,"Another Street","Another Town","Another County","Another Postcode");
-INSERT INTO Address VALUES (3,1,"Street","Town","Country","Postcode");
-INSERT INTO User VALUES ("joeb","password","saltsaltsaltsalt","Joe","Bloggs","joeb@gmail.com",1);
-INSERT INTO User VALUES("bobg","password","saltsaltsaltsalt","Bob","Green","bobg@gmail.com",2);
-INSERT INTO User VALUES ("franks","password","saltsaltsaltsalt","Frank", "Smith","franks@gmail.com",3);
-INSERT INTO Account VALUES("Joe's current account","current",100,"£","joeb","11111111");
-INSERT INTO Account VALUES("Bob's current account","current",350,"£","bobg","22222222");
-INSERT INTO Account VALUES("Bob's savings account", "savings", 50, "£", "bobg", "33333333");
-INSERT INTO Account VALUES("Frank's current account","current",75,"£","franks","44444444");
-INSERT INTO Transaction VALUES(1,10,"2020-12-02 12:51:00","bob","22222222","11111111","Pizza night","Eating Out");
-INSERT INTO Transaction VALUES(2,20,"2020-12-02 13:00:00","bob","22222222","11111111","Car ride","Transport");
-INSERT INTO Transaction VALUES(3,10,"2020-12-01 12:00:00","bob","22222222","11111111","Cinema","Entertainment");
-INSERT INTO Transaction VALUES(4,10,"2020-12-01 14:00:00","joe","11111111","22222222","Food","Eating Out");
-INSERT INTO Transaction VALUES(5,10,"2020-12-01 14:00:00","frank","44444444","22222222","Mini Golf","Entertainment");
-INSERT INTO Favourites VALUES(1, "bobg", "Joe", "11111111");
-INSERT INTO Favourites VALUES(2, "bobg", "Frank", "44444444");
+
+INSERT INTO User VALUES("netflix","password","saltsaltsaltsalt","netflix","netflix","netflix@gmail.com",1,"secret");
+INSERT INTO User VALUES("spotify","password","saltsaltsaltsalt","spotify","spotify","spotify@gmail.com",1,"secret");
+INSERT INTO User VALUES("puregym","password","saltsaltsaltsalt","puregym","puregym","puregym@gmail.com",1,"secret");
+INSERT INTO User VALUES("mcdonalds","password","saltsaltsaltsalt","mcdonalds","mcdonalds","mcdonalds@gmail.com",1,"secret");
+INSERT INTO User VALUES("ubereats","password","saltsaltsaltsalt","ubereats","ubereats","ubereats@gmail.com",1,"secret");
+INSERT INTO User VALUES("asda","password","saltsaltsaltsalt","asda","asda","asda@gmail.com",1,"secret");
+INSERT INTO User VALUES("aldi","password","saltsaltsaltsalt","aldi","aldi","aldi@gmail.com",1,"secret");
+INSERT INTO User VALUES("amazon","password","saltsaltsaltsalt","amazon","amazon","amazon@gmail.com",1,"secret");
+
+INSERT INTO Account VALUES("Netflix","current",100,"£","netflix","11111111");
+INSERT INTO Account VALUES("Spotify","current",100,"£","spotify","22222222");
+INSERT INTO Account VALUES("PureGym","current",100,"£","puregym","33333333");
+INSERT INTO Account VALUES("McDonalds","current",100,"£","mcdonalds","44444444");
+INSERT INTO Account VALUES("Uber Eats","current",100,"£","ubereats","55555555");
+INSERT INTO Account VALUES("Asda","current",100,"£","asda","66666666");
+INSERT INTO Account VALUES("Aldi","current",100,"£","aldi","77777777");
+INSERT INTO Account VALUES("Amazon","current",100,"£","amazon","88888888");
