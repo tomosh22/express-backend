@@ -621,28 +621,29 @@ router.get('/getUserInformation/:username', [
         }
     });
 
-router.post('/updateUserInformation/:username/:password/:salt/:firstname/:surname/:email', [
+router.post('/updateUserInformation/:username/:password/:salt/:firstname/:secondname/:email', [
         param('username').notEmpty().isLength({max: 45}).matches(sqlI),
         param('password').notEmpty().isLength({max: 128}).matches(sqlI),
         param('salt').notEmpty().isLength({max: 100}).matches(sqlI),
         param('firstname').notEmpty().isLength({max: 45}).matches(sqlI),
-        param('surname').notEmpty().isLength({max: 45}).matches(sqlI),
-        param('email').matches("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$").isLength({max: 45}).matches(sqlI),
+        param('secondname').notEmpty().isLength({max: 45}).matches(sqlI),
+        param('email').matches("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$").isLength({max: 45}).matches(sqlI)],
     function (req, res, next) {
         /*
-        Updates Username, Password, Salt, Email, FirstName, LastName from User table where Username matches username parameter
+        Updates Username, Password, Salt, Email, FirstName, LastName from User table where Username
+        matches username parameter
         */
         const errors = validationResult(req);
         if (errors.isEmpty()) {
             p = req.params;
             query = "UPDATE User SET " +
-                "Username = " + "\'" + p.username + "\'," +
-                "Password = " + "\'" + p.password + "\'," +
-                "Salt = " + "\'" + p.salt + "\'," +
-                "FirstName = " + "\'" + p.firstname + "\'," +
-                "SecondName = " + "\'" + p.surname + "\'," +
-                "Email = " + "\'" + p.email + "\'," +
-                ");";
+                "Username = "  +"\'" + p.username + "\'," +
+                "Password = "  +"\'" + p.password + "\'," +
+                "Salt = "      +"\'" + p.salt + "\'," +
+                "FirstName = " +"\'" + p.firstname + "\'," +
+                "SecondName = "+"\'" + p.secondname + "\'," +
+                "Email = "     +"\'" + p.email + "\'" +
+                "WHERE Username = "+ "\'" + p.username + "\'" +";";
             console.log(query);
             doPost(query, res);
         }
