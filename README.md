@@ -24,5 +24,5 @@ To try it on mobile, navigate to the IP that is provided in the terminal after r
 The web app allows you to create a StuBank account, sign in, create accounts and move money. For more information, view the FAQ page on the web app.
 
 To test admin functionality, navigate to /admin and use the following details:
-Username: admin
+Username: admin\
 Password: Pass1234
