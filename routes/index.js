@@ -530,24 +530,24 @@ router.post('/deleteTag/:username/:tagName', [
         }
     });
 
-router.post('/getTransactionCount',
+router.get('/getTransactionCount',
     function (req, res, next) {
         /*
         Returns the number of rows in the Transaction Table
          */
-        query = "SELECT COUNT(*) FROM Transaction";
+        query = "SELECT COUNT(*) AS transactionCount FROM Transaction";
         console.log(query);
-        doPost(query, res);
+        doGet(query, res);
 });
 
-router.post('/getUserCount',
+router.get('/getUserCount',
     function (req,res,next){
         /*
         Returns the number of rows in the User Table
          */
-        query = "SELECT COUNT(*) FROM User";
+        query = "SELECT COUNT(*) AS userCount FROM User";
         console.log(query);
-        doPost(query, res);
+        doGet(query, res);
 });
 
 router.post('/insertAdmin/:adminName/:password/:salt/:email', [
@@ -618,6 +618,34 @@ router.get('/getUserInformation/:username', [
             query = "SELECT * FROM User WHERE Username = " + "\'" + p.username + "\'";
             console.log(query);
             doGet(query, res);
+        }
+    });
+
+router.post('/updateUserInformation/:username/:password/:salt/:firstname/:secondname/:email', [
+        param('username').notEmpty().isLength({max: 45}).matches(sqlI),
+        param('password').notEmpty().isLength({max: 128}).matches(sqlI),
+        param('salt').notEmpty().isLength({max: 100}).matches(sqlI),
+        param('firstname').notEmpty().isLength({max: 45}).matches(sqlI),
+        param('secondname').notEmpty().isLength({max: 45}).matches(sqlI),
+        param('email').matches("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$").isLength({max: 45}).matches(sqlI)],
+    function (req, res, next) {
+        /*
+        Updates Username, Password, Salt, Email, FirstName, LastName from User table where Username
+        matches username parameter
+        */
+        const errors = validationResult(req);
+        if (errors.isEmpty()) {
+            p = req.params;
+            query = "UPDATE User SET " +
+                "Username = "  +"\'" + p.username + "\'," +
+                "Password = "  +"\'" + p.password + "\'," +
+                "Salt = "      +"\'" + p.salt + "\'," +
+                "FirstName = " +"\'" + p.firstname + "\'," +
+                "SecondName = "+"\'" + p.secondname + "\'," +
+                "Email = "     +"\'" + p.email + "\'" +
+                "WHERE Username = "+ "\'" + p.username + "\'" +";";
+            console.log(query);
+            doPost(query, res);
         }
     });
 
