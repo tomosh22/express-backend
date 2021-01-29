@@ -122,3 +122,5 @@ INSERT INTO Account VALUES("Uber Eats","current",100,"£","ubereats","55555555")
 INSERT INTO Account VALUES("Asda","current",100,"£","asda","66666666");
 INSERT INTO Account VALUES("Aldi","current",100,"£","aldi","77777777");
 INSERT INTO Account VALUES("Amazon","current",100,"£","amazon","88888888");
+
+INSERT INTO Admin VALUES ("admin", "7f7016b4dc620a7aa1b215a82b05f3e64e8c9446c4068f41f350e04c9b69852c984753db35478bf05baed6e3832b46e94666e5ba59e2a0b59c865d611a1bd5b9", "��0�U����o1W�O{�", "admin@admin.com")
